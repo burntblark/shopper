@@ -40,6 +40,11 @@
 				android:value="com.ci.shopper.MainActivity" />
 		</activity>
 		
+		<provider
+			android:name=".db.CategoryContentProvider"
+			android:authorities="com.ci.shopper.db">
+		</provider>
+		
     </application>
 
 </manifest>

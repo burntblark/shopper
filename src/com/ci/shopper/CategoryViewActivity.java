@@ -22,9 +22,9 @@ public class CategoryViewActivity extends Activity
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			int catId = extras.getInt("CATEGORY_ID");
-			HashMap <String, String> category = MainActivity.categories.get(catId);
+			//HashMap <String, String> category = MainActivity.categories.get(catId);
 			Toast.makeText(getApplicationContext(), "Category ID: " + catId, Toast.LENGTH_SHORT).show();
-			setTitle(category.get("name"));
+			//setTitle(category.get("name"));
 		}else{
 			//finish();
 		}

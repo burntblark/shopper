@@ -6,9 +6,13 @@ import android.view.*;
 import android.widget.*;
 import android.content.*;
 import java.util.*;
+import com.ci.shopper.db.*;
+import android.net.*;
 
 public class CategoryEditActivity extends Activity
 {
+	private Uri categoryUri;
+	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -36,14 +40,18 @@ public class CategoryEditActivity extends Activity
 		if (item.getItemId() == R.id.category_save){
 			//Intent intent = new Intent(this, CategoryEditActivity.class);
 			//startActivity(intent);
-			HashMap <String, String> category = new HashMap <String, String> ();
-			category.put("id", Integer.toString(MainActivity.categories.size()));
-			category.put("name", ((EditText) findViewById(R.id.catName)).getText().toString());
-			category.put("description", ((EditText) findViewById(R.id.catDesc)).getText().toString());
+			ContentValues values = new ContentValues();
 			
-			MainActivity.categories.add(category);
+			//HashMap <String, String> category = new HashMap <String, String> ();
+			//category.put("id", Integer.toString(MainActivity.categories.size()));
+			values.put("name", ((EditText) findViewById(R.id.catName)).getText().toString());
+			values.put("description", ((EditText) findViewById(R.id.catDesc)).getText().toString());
+			
+			//MainActivity.categories.add(category);
+			categoryUri = getContentResolver().insert(CategoryContentProvider.CONTENT_URI, values);
 			
 			Toast.makeText(getApplicationContext(), R.string.category_edited, Toast.LENGTH_SHORT).show();
+			
 			setResult(RESULT_OK);
 			finish();
 		}
