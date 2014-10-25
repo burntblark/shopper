@@ -2,8 +2,12 @@
     
 	<item
 		android:id="@+id/category_add"
-		android:title="@string/add"
+		android:title="@string/add_category"
 		android:icon="@drawable/ic_action_new"
-		android:showAsAction="always" />
+		android:showAsAction="never" />
+    <item
+		android:id="@+id/budget_cycle"
+		android:title="@string/change_budget"
+		android:showAsAction="never" />
     
 </menu>

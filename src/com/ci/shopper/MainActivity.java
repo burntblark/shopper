@@ -5,10 +5,11 @@ import android.content.*;
 import android.database.*;
 import android.os.*;
 import android.view.*;
+import android.view.ContextMenu.*;
 import android.widget.*;
+import android.widget.AdapterView.*;
 import com.ci.shopper.db.*;
-import java.util.*;
-import android.util.*;
+import com.ci.shopper.provider.*;
 
 
 public class MainActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>
@@ -16,6 +17,8 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	static final int EDIT_CATEGORY_REQUEST = 1;
 
 	SimpleCursorAdapter adapter;
+	
+	ListView catListView;
 
     /** Called when the activity is first created. */
     @Override
@@ -23,6 +26,20 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+		catListView = (ListView) findViewById(R.id.categoriesListView);
+		registerForContextMenu(catListView);
+		
+		catListView.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> p1, View v, int position, long p4)
+			{
+				Intent intent = new Intent(getApplicationContext(), CategoryViewActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		View header = getLayoutInflater().inflate(R.layout.cat_summary_header,null);
+		catListView.addHeaderView(header);
 		
 		fillCategories();
 	}	
@@ -33,11 +50,9 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 		
 		getLoaderManager().initLoader(0, null, this);
 		adapter = new SimpleCursorAdapter(this, R.layout.categories, null, fields, views);
-		
-		ListView catListView = (ListView) findViewById(R.id.categoriesListView);
+	
 		catListView.setAdapter(adapter);
-		Log.w("ShopperLog", "Got here");
-		
+		//Log.w("ShopperLog", "Got here");
 	}
 
 	@Override
@@ -99,61 +114,42 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 
 		return super.onOptionsItemSelected(item);
 	}
-
-	public class LazyAdapter extends BaseAdapter
-	{
-
-		private Activity activity;
-		private ArrayList<HashMap<String, String>> data;
-		private LayoutInflater inflater=null;
-
-		public LazyAdapter(Activity a, ArrayList<HashMap<String, String>> d)
-		{
-			activity = a;
-			data = d;
-			inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-		}
-
-		public int getCount()
-		{
-			return data.size();
-		}
-
-		public Object getItem(int position)
-		{
-			return data.get(position);
-		}
-
-		public long getItemId(int position)
-		{
-			return position;
-		}
-
-		public View getView(int position, View convertView, ViewGroup parent)
-		{
-			View vi=convertView;
-			if (convertView == null)
-				vi = inflater.inflate(R.layout.categories, null);
-
-			TextView title = (TextView)vi.findViewById(R.id.categoriesTextView); // title
-			TextView artist = (TextView)vi.findViewById(R.id.itemCount); // artist name
-
-			HashMap<String, String> item = new HashMap<String, String>();
-			item = data.get(position);
-
-			// Setting all values in listview
-			vi.setTag(item.get("id"));
-
-			title.setText(item.get("name"));
-			artist.setText(item.get("description"));
-
-			return vi;
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+									ContextMenuInfo menuInfo) {
+		if (v.getId()==R.id.categoriesListView) {
+			AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+			String title = (String) ((TextView) info.targetView
+                .findViewById(R.id.categoriesTextView)).getText();
+			menu.setHeaderTitle(title);
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.category_context_menu, menu);
 		}
 	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+		long _id = menuinfo.id; //_id from database in this case
+		//int selectpos = menuinfo.position; //position in the adapter
+		switch (item.getItemId()) {
+			case R.id.category_edit:
+				Intent intent = new Intent(getApplicationContext(), CategoryEditActivity.class);
+				intent.putExtra(CategoriesTable._ID, _id);
+				startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
+				break;
+			case R.id.category_add_item:
+				Toast.makeText(getApplicationContext(), "Add Item", Toast.LENGTH_LONG).show();
+				break;
+			case R.id.category_delete:
+				Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_LONG).show();
+				break;
+			default:
+				//Toast.makeText(getApplicationContext(), Long.toString(selectid), Toast.LENGTH_LONG).show();
+				break;
+		}
+		
+		return super.onContextItemSelected(item);
+	}
 }
-
-
-	
-
-	

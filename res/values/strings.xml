@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="add">Add</string>
+    <string name="add_category">Add Expense Category</string>
+	<string name="change_budget">Change Budget Cycle</string>
     <string name="app_name">Shopper</string>
 	<string name="category_edited">Category saved!</string>
-
+	<string name="edit_category">Edit Category</string>
+	<string name="add_item">Add Item</string>
+	<string name="delete_category">Delete Category</string>
+	
+	<string-array name="budget_cycle">
+		<item>20 - 19 Nov</item>
+		<item>20 - 19 Oct</item>
+		<item>20 - 19 Sep</item>
+		<item>20 - 19 Aug</item>
+		<item>20 - 19 Jul</item>
+	</string-array>
 </resources>
