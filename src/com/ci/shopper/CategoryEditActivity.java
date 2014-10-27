@@ -25,11 +25,11 @@ public class CategoryEditActivity extends Activity
 			long _id = intent.getLongExtra(CategoriesTable._ID, 0);
 			categoryUri = Uri.parse(CategoryContentProvider.CONTENT_URI + "/" + _id);
 			
-			String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME_NAME, CategoriesTable.COLUMN_NAME_DESC};
+			String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME, CategoriesTable.COLUMN_DESC};
 			Cursor cursor = getContentResolver().query(categoryUri, projection, null, null, null);
 			cursor.moveToFirst();
 			
-			setTitle("Edit Category");
+			setTitle(R.string.edit_category);
 			
 			((EditText)findViewById(R.id.catName)).setText(cursor.getString(1));
 			((EditText)findViewById(R.id.catDesc)).setText(cursor.getString(2));

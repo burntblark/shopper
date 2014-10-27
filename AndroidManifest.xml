@@ -6,7 +6,7 @@
 
     <uses-sdk 
         android:minSdkVersion="8" 
-        android:targetSdkVersion="11" />
+        android:targetSdkVersion="20" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 		<activity
-			android:label="Add Category"
+			android:label="@string/add_category"
 			android:name=".CategoryEditActivity"
 			android:parentActivityName=".MainActivity">
 			<meta-data
@@ -39,10 +39,23 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.ci.shopper.MainActivity" />
 		</activity>
+
+		<activity
+			android:label="@string/add_item"
+			android:name=".ItemEditActivity"
+			android:parentActivityName=".CategoryViewActivity">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.ci.shopper.CategoryViewActivity" />
+		</activity>
 		
 		<provider
-			android:name=".db.CategoryContentProvider"
-			android:authorities="com.ci.shopper.db">
+			android:name=".provider.CategoryContentProvider"
+			android:authorities="com.ci.shopper.provider.Category">
+		</provider>
+		<provider
+			android:name=".provider.ItemContentProvider"
+			android:authorities="com.ci.shopper.provider.Item">
 		</provider>
 		
     </application>

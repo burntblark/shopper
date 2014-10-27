@@ -7,56 +7,59 @@ import android.net.*;
 import android.text.*;
 import java.util.*;
 import com.ci.shopper.db.*;
+import android.util.*;
 
-public class CategoryContentProvider extends ContentProvider
+public class ItemContentProvider extends ContentProvider
 {
-	private ShopperDbHelper database;
+	private ShopperDbHelper dbHelper;
 
-	private static final int CATEGORIES = 10;
-	private static final int CATEGORY_ID = 20;
+	private static final int ITEMS = 10;
+	private static final int ITEM_ID = 20;
 
-	private static final String AUTHORITY = "com.ci.shopper.provider.Category";
+	private static final String AUTHORITY = "com.ci.shopper.provider.Item";
 
-	private static final String BASE_PATH = "categories";
+	private static final String BASE_PATH = "items";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 
-	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/categories";
-	public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/category";
+	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/items";
+	public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/item";
 
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
 	static {
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH, CATEGORIES);
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", CATEGORY_ID);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH, ITEMS);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", ITEM_ID);
 	}
 
 
 	@Override
 	public boolean onCreate()
 	{
-		database = new ShopperDbHelper(getContext());
+		dbHelper = new ShopperDbHelper(getContext());
 		return false;
 	}
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
 	{
+		Log.w("ShopperLog", "Querying " + uri.toString());
+		
 		SQLiteQueryBuilder qBuilder = new SQLiteQueryBuilder();
 		checkColumns(projection);
-		qBuilder.setTables(CategoriesTable.TABLE_NAME);
+		qBuilder.setTables(ItemsTable.TABLE_NAME);
 
 		int uriType = sURIMatcher.match(uri);
 		switch(uriType) {
-			case CATEGORIES:
+			case ITEMS:
 				break;
-			case CATEGORY_ID:
-				qBuilder.appendWhere(CategoriesTable._ID + "=" + uri.getLastPathSegment());
+			case ITEM_ID:
+				qBuilder.appendWhere(ItemsTable._ID + "=" + uri.getLastPathSegment());
 				break;
 			default:
 				throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
 
-		SQLiteDatabase db = database.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		Cursor cursor = qBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
@@ -74,12 +77,12 @@ public class CategoryContentProvider extends ContentProvider
 	public Uri insert(Uri uri, ContentValues values)
 	{
 		int uriType = sURIMatcher.match(uri);
-		SQLiteDatabase db = database.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		long id = 0;
 
 		switch(uriType){
-			case CATEGORIES:
-				id = db.insert(CategoriesTable.TABLE_NAME, null, values);
+			case ITEMS:
+				id = db.insert(ItemsTable.TABLE_NAME, null, values);
 				break;
 			default:
 				throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -95,19 +98,19 @@ public class CategoryContentProvider extends ContentProvider
 	public int delete(Uri uri, String selection, String[] selectionArgs)
 	{
 		int uriType = sURIMatcher.match(uri);
-		SQLiteDatabase db = database.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		int rowsDeleted = 0;
 
 		switch(uriType){
-			case CATEGORIES:
-				rowsDeleted = db.delete(CategoriesTable.TABLE_NAME, selection, selectionArgs);
+			case ITEMS:
+				rowsDeleted = db.delete(ItemsTable.TABLE_NAME, selection, selectionArgs);
 				break;
-			case CATEGORY_ID:
+			case ITEM_ID:
 				String id = uri.getLastPathSegment();
 				if (TextUtils.isEmpty(selection)) {
-					rowsDeleted = db.delete(CategoriesTable.TABLE_NAME, CategoriesTable._ID + "=" + id, null);
+					rowsDeleted = db.delete(ItemsTable.TABLE_NAME, ItemsTable._ID + "=" + id, null);
 				}else{
-					rowsDeleted = db.delete(CategoriesTable.TABLE_NAME, CategoriesTable._ID + "=" + id + " and " + selection, selectionArgs);
+					rowsDeleted = db.delete(ItemsTable.TABLE_NAME, ItemsTable._ID + "=" + id + " and " + selection, selectionArgs);
 				}
 				break;
 			default:
@@ -125,26 +128,26 @@ public class CategoryContentProvider extends ContentProvider
 					  String[] selectionArgs) {
 
 		int uriType = sURIMatcher.match(uri);
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
+		SQLiteDatabase sqlDB = dbHelper.getWritableDatabase();
 		int rowsUpdated = 0;
 		switch (uriType) {
-			case CATEGORIES:
-				rowsUpdated = sqlDB.update(CategoriesTable.TABLE_NAME, 
+			case ITEMS:
+				rowsUpdated = sqlDB.update(ItemsTable.TABLE_NAME, 
 										   values, 
 										   selection,
 										   selectionArgs);
 				break;
-			case CATEGORY_ID:
+			case ITEM_ID:
 				String id = uri.getLastPathSegment();
 				if (TextUtils.isEmpty(selection)) {
-					rowsUpdated = sqlDB.update(CategoriesTable.TABLE_NAME, 
+					rowsUpdated = sqlDB.update(ItemsTable.TABLE_NAME, 
 											   values,
-											   CategoriesTable._ID + "=" + id, 
+											   ItemsTable._ID + "=" + id, 
 											   null);
 				} else {
-					rowsUpdated = sqlDB.update(CategoriesTable.TABLE_NAME, 
+					rowsUpdated = sqlDB.update(ItemsTable.TABLE_NAME, 
 											   values,
-											   CategoriesTable._ID + "=" + id 
+											   ItemsTable._ID + "=" + id 
 											   + " and " 
 											   + selection,
 											   selectionArgs);
@@ -158,9 +161,10 @@ public class CategoryContentProvider extends ContentProvider
 	}
 
 	private void checkColumns(String[] projection) {
-		String[] available = { CategoriesTable.COLUMN_NAME,
-			CategoriesTable.COLUMN_DESC,
-			CategoriesTable._ID };
+		String[] available = { ItemsTable.COLUMN_NAME,
+			ItemsTable.COLUMN_DESC,
+			ItemsTable.COLUMN_CATEGORY_ID,
+			ItemsTable._ID };
 
 		if (projection != null) {
 			HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));

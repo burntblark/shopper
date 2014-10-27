@@ -16,11 +16,10 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 {
 	static final int EDIT_CATEGORY_REQUEST = 1;
 
-	SimpleCursorAdapter adapter;
+	SimpleCursorAdapter catListAdapter;
 	
 	ListView catListView;
 
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
 	{
@@ -31,9 +30,11 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 		
 		catListView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
-			public void onItemClick(AdapterView<?> p1, View v, int position, long p4)
+			public void onItemClick(AdapterView<?> p1, View v, int position, long id)
 			{
 				Intent intent = new Intent(getApplicationContext(), CategoryViewActivity.class);
+				
+				intent.putExtra(CategoriesTable._ID, id);
 				startActivity(intent);
 			}
 		});
@@ -45,20 +46,19 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	}	
 	
 	private void fillCategories(){
-		String [] fields = new String [] {CategoriesTable.COLUMN_NAME_NAME};
-		int[] views = new int[] {R.id.categoriesTextView};
+		String [] fields = new String [] {CategoriesTable.COLUMN_NAME};
+		int[] views = new int[] {R.id.categoryName};
 		
 		getLoaderManager().initLoader(0, null, this);
-		adapter = new SimpleCursorAdapter(this, R.layout.categories, null, fields, views);
+		catListAdapter = new SimpleCursorAdapter(this, R.layout.category_row, null, fields, views);
 	
-		catListView.setAdapter(adapter);
-		//Log.w("ShopperLog", "Got here");
+		catListView.setAdapter(catListAdapter);
 	}
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
 	{
-		String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME_NAME, CategoriesTable.COLUMN_NAME_DESC};
+		String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME, CategoriesTable.COLUMN_DESC};
 		CursorLoader cLoader = new CursorLoader(this, CategoryContentProvider.CONTENT_URI, projection, null, null, null);
 		
 		return cLoader;
@@ -67,14 +67,13 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data)
 	{
-		adapter.swapCursor(data);
+		catListAdapter.swapCursor(data);
 	}
 
 	@Override
 	public void onLoaderReset(Loader loader)
 	{
-		adapter.swapCursor(null);
-		
+		catListAdapter.swapCursor(null);
 	}
 
 	@Override
@@ -93,14 +92,10 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 		{
 			if (resultCode == RESULT_OK)
 			{
-				adapter.notifyDataSetChanged();
+				catListAdapter.notifyDataSetChanged();
 			}
 		}
-
-		//super.onActivityResult(requestCode, resultCode, data);
 	}
-
-
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
@@ -116,12 +111,11 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	}
 	
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-									ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		if (v.getId()==R.id.categoriesListView) {
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
 			String title = (String) ((TextView) info.targetView
-                .findViewById(R.id.categoriesTextView)).getText();
+                .findViewById(R.id.categoryName)).getText();
 			menu.setHeaderTitle(title);
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.category_context_menu, menu);
@@ -132,7 +126,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 		long _id = menuinfo.id; //_id from database in this case
-		//int selectpos = menuinfo.position; //position in the adapter
+		//to get the position in the adapter -> menuinfo.position
 		switch (item.getItemId()) {
 			case R.id.category_edit:
 				Intent intent = new Intent(getApplicationContext(), CategoryEditActivity.class);
@@ -145,9 +139,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 			case R.id.category_delete:
 				Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_LONG).show();
 				break;
-			default:
-				//Toast.makeText(getApplicationContext(), Long.toString(selectid), Toast.LENGTH_LONG).show();
-				break;
+			default: break;
 		}
 		
 		return super.onContextItemSelected(item);

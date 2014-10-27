@@ -6,7 +6,7 @@
 	android:orientation="vertical">
 
 	<EditText
-		android:id="@+id/catName"
+		android:id="@+id/itemName"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:hint="Name"
@@ -15,14 +15,19 @@
 		android:singleLine="true"/>
 
 	<EditText
-		android:id="@+id/catDesc"
+		android:id="@+id/itemDesc"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="top"
 		android:hint="Description"
-		android:inputType="textNoSuggestions|textMultiLine|textCapSentences"
+		android:inputType="textNoSuggestions|textCapSentences|textMultiLine"
 		android:layout_marginBottom="10dp"
 		android:singleLine="false"/>
 
+	<Spinner
+		android:id="@+id/itemCatId"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"/>
+		
 </LinearLayout>
 
