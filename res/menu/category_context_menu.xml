@@ -1,12 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item
-	android:id="@+id/category_edit"
-	android:title="@string/edit_category" />
-<item
-	android:id="@+id/category_add_item"
-	android:title="@string/add_item" />
-
+	<item
+		android:id="@+id/category_edit"
+		android:title="@string/edit_category" />
+	<item
+		android:id="@+id/category_add_item"
+		android:title="@string/add_item" />
 	<item
 		android:id="@+id/category_delete"
 		android:title="@string/delete_category" />

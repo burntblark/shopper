@@ -9,5 +9,8 @@
 		android:id="@+id/budget_cycle"
 		android:title="@string/change_budget"
 		android:showAsAction="never" />
-    
+    <item
+		android:id="@+id/expense_new"
+		android:title="@string/new_expense"
+		android:showAsAction="never" />
 </menu>

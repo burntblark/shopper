@@ -10,72 +10,37 @@ import android.widget.*;
 import android.widget.AdapterView.*;
 import com.ci.shopper.db.*;
 import com.ci.shopper.provider.*;
+import com.ci.shopper.fragment.*;
+import android.support.v4.widget.*;
 
 
-public class MainActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>
+public class MainActivity extends Activity
 {
-	static final int EDIT_CATEGORY_REQUEST = 1;
+	private static final int EDIT_CATEGORY_REQUEST = 1;
 
-	SimpleCursorAdapter catListAdapter;
-	
-	ListView catListView;
+	private static final int EDIT_ITEM_REQUEST = 2;
+
+	private DrawerLayout drawer;
+
+	private FrameLayout frame;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-		catListView = (ListView) findViewById(R.id.categoriesListView);
-		registerForContextMenu(catListView);
+        setContentView(R.layout.left_drawer);
 		
-		catListView.setOnItemClickListener(new OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView<?> p1, View v, int position, long id)
-			{
-				Intent intent = new Intent(getApplicationContext(), CategoryViewActivity.class);
-				
-				intent.putExtra(CategoriesTable._ID, id);
-				startActivity(intent);
-			}
-		});
+		drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		frame = (FrameLayout) findViewById(R.id.content_frame);
 		
-		View header = getLayoutInflater().inflate(R.layout.cat_summary_header,null);
-		catListView.addHeaderView(header);
+		Fragment dashboard = new HomeFragment();
 		
-		fillCategories();
-	}	
+		FragmentManager fm = getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		ft.replace(R.id.content_frame, dashboard);
+		ft.commit();
+	}
 	
-	private void fillCategories(){
-		String [] fields = new String [] {CategoriesTable.COLUMN_NAME};
-		int[] views = new int[] {R.id.categoryName};
-		
-		getLoaderManager().initLoader(0, null, this);
-		catListAdapter = new SimpleCursorAdapter(this, R.layout.category_row, null, fields, views);
-	
-		catListView.setAdapter(catListAdapter);
-	}
-
-	@Override
-	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
-	{
-		String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME, CategoriesTable.COLUMN_DESC};
-		CursorLoader cLoader = new CursorLoader(this, CategoryContentProvider.CONTENT_URI, projection, null, null, null);
-		
-		return cLoader;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data)
-	{
-		catListAdapter.swapCursor(data);
-	}
-
-	@Override
-	public void onLoaderReset(Loader loader)
-	{
-		catListAdapter.swapCursor(null);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -83,18 +48,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 		inflater.inflate(R.menu.main_menu, menu);
 
 		return true;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		if (requestCode == EDIT_CATEGORY_REQUEST)
-		{
-			if (resultCode == RESULT_OK)
-			{
-				catListAdapter.notifyDataSetChanged();
-			}
-		}
 	}
 
 	@Override
@@ -134,7 +87,9 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 				startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
 				break;
 			case R.id.category_add_item:
-				Toast.makeText(getApplicationContext(), "Add Item", Toast.LENGTH_LONG).show();
+				Intent intent2 = new Intent(getApplicationContext(), ItemEditActivity.class);
+				intent2.putExtra("catId", _id);
+				startActivityForResult(intent2, EDIT_ITEM_REQUEST);
 				break;
 			case R.id.category_delete:
 				Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_LONG).show();

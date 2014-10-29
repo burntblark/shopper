@@ -5,26 +5,6 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical">
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal"
-		android:gravity="center_vertical"
-		android:padding="5dp">
-
-		<TextView
-			android:layout_height="wrap_content"
-			android:text="Budget cycle:"
-			android:layout_width="wrap_content"/>
-
-		<Spinner
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:layout_weight="1.0"
-			android:entries="@array/budget_cycle"/>
-
-	</LinearLayout>
-
 	<TextView
 		android:layout_height="200dp"
 		android:text="Statistics"
