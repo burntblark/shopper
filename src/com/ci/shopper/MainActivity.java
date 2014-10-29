@@ -30,6 +30,9 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.left_drawer);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
 		drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		frame = (FrameLayout) findViewById(R.id.content_frame);
 		
