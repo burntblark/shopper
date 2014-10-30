@@ -9,7 +9,6 @@ import android.widget.*;
 import com.ci.shopper.db.*;
 import com.ci.shopper.provider.*;
 import android.content.*;
-import android.util.*;
 
 public class CategoryViewActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>
 {

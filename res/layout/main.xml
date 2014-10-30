@@ -14,6 +14,7 @@
 		<ImageButton
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
+			android:contentDescription="Left Dir"
 			android:src="@android:drawable/ic_menu_close_clear_cancel"/>
 
 		<LinearLayout
@@ -41,6 +42,7 @@
 		<ImageButton
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
+			android:contentDescription="Right Dir"
 			android:src="@android:drawable/ic_menu_close_clear_cancel"/>
 
 	</LinearLayout>

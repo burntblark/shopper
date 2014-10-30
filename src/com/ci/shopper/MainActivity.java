@@ -2,15 +2,15 @@ package com.ci.shopper;
 
 import android.app.*;
 import android.content.*;
-import android.database.*;
 import android.os.*;
 import android.view.*;
 import android.view.ContextMenu.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
+
 import com.ci.shopper.db.*;
-import com.ci.shopper.provider.*;
 import com.ci.shopper.fragment.*;
+
 import android.support.v4.widget.*;
 
 
@@ -24,23 +24,37 @@ public class MainActivity extends Activity
 
 	private FrameLayout frame;
 
+	private Fragment dashboard;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.left_drawer);
 		
-		drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		frame = (FrameLayout) findViewById(R.id.content_frame);
+		setLeftDrawer((DrawerLayout) findViewById(R.id.drawer_layout));
+		setContentFrame((FrameLayout) findViewById(R.id.content_frame));
 		
-		Fragment dashboard = new HomeFragment();
-		
-		FragmentManager fm = getFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(R.id.content_frame, dashboard);
-		ft.commit();
+		initialize();
 	}
 	
+	private void initialize() {
+		dashboard = new HomeFragment();
+		
+		getFragmentManager()
+				.beginTransaction()
+				.replace(R.id.content_frame, dashboard)
+				.commit();
+	}
+
+	public DrawerLayout getLeftDrawer() {
+		return drawer;
+	}
+
+	public void setLeftDrawer(DrawerLayout drawer) {
+		this.drawer = drawer;
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -98,5 +112,13 @@ public class MainActivity extends Activity
 		}
 		
 		return super.onContextItemSelected(item);
+	}
+
+	public FrameLayout getContentFrame() {
+		return frame;
+	}
+
+	public void setContentFrame(FrameLayout frame) {
+		this.frame = frame;
 	}
 }
