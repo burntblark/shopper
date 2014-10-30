@@ -12,11 +12,11 @@
 	<string name="delete_category">Delete Category</string>
 	<string name="new_expense">New Expense</string>
 	
-	<string-array name="budget_cycle">
-		<item>20 - 19 Nov</item>
-		<item>20 - 19 Oct</item>
-		<item>20 - 19 Sep</item>
-		<item>20 - 19 Aug</item>
-		<item>20 - 19 Jul</item>
+	<string-array name="drawer_menu">
+		<item>Home</item>
+		<item>Shopping list</item>
+		<item>Expenditure</item>
+		<item>Locations</item>
+		<item>Marketplaces</item>
 	</string-array>
 </resources>
