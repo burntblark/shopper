@@ -9,7 +9,6 @@ import android.view.*;
 import android.widget.*;
 import com.ci.shopper.db.*;
 import com.ci.shopper.provider.*;
-import com.ci.shopper.model.*;
 import java.util.*;
 
 public class ItemEditActivity extends Activity

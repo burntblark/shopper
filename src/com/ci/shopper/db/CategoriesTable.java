@@ -1,12 +1,8 @@
 package com.ci.shopper.db;
 
-import android.provider.*;
-import android.database.sqlite.*;
-import android.content.*;
-import android.database.*;
-import com.ci.shopper.*;
-import java.util.*;
-import android.util.*;
+import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
+import android.util.Log;
 
 public class CategoriesTable implements BaseColumns
 {
