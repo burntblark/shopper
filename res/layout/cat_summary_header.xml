@@ -6,12 +6,12 @@
 	android:orientation="vertical">
 
 	<LinearLayout
-	    android:id="@+id/summary_chart"
-	    android:layout_width="fill_parent"
-	    android:layout_height="200dp"
-	    android:background="@color/black"
-	    android:orientation="vertical" >
-	
+		android:id="@+id/summary_chart"
+		android:layout_width="fill_parent"
+		android:layout_height="200dp"
+		android:background="@android:color/black"
+		android:orientation="vertical">
+
 	</LinearLayout>
 
 	<TextView
@@ -19,7 +19,9 @@
 		android:text="@string/summary_hint"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:layout_width="match_parent"
-		android:padding="10dp"/>
+		android:padding="10dp"
+		android:layout_gravity="center_horizontal"
+		android:textAlignment="center"/>
 
 </LinearLayout>
 

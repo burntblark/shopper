@@ -5,6 +5,11 @@
 		android:title="@string/add_category"
 		android:icon="@drawable/ic_action_new"
 		android:showAsAction="never" />
+	<item
+		android:id="@+id/item_add"
+		android:title="@string/add_item"
+		android:icon="@drawable/ic_action_new"
+		android:showAsAction="never" />
     <item
 		android:id="@+id/budget_cycle"
 		android:title="@string/change_budget"

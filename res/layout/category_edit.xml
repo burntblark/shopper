@@ -3,7 +3,8 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	android:padding="10dp">
 
 	<EditText
 		android:id="@+id/catName"
@@ -13,16 +14,6 @@
 		android:inputType="textCapWords|textAutoComplete"
 		android:layout_marginBottom="10dp"
 		android:singleLine="true"/>
-
-	<EditText
-		android:id="@+id/catDesc"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="top"
-		android:hint="Description"
-		android:inputType="textNoSuggestions|textMultiLine|textCapSentences"
-		android:layout_marginBottom="10dp"
-		android:singleLine="false"/>
 
 </LinearLayout>
 

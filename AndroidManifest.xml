@@ -25,7 +25,9 @@
 		<activity
 			android:label="@string/add_category"
 			android:name=".CategoryEditActivity"
-			android:parentActivityName=".MainActivity">
+			android:parentActivityName=".MainActivity"
+			android:theme="@android:style/Theme.Holo.Light.Dialog">
+			
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.ci.shopper.MainActivity" />
@@ -48,6 +50,15 @@
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.ci.shopper.CategoryViewActivity" />
+		</activity>
+
+		<activity
+			android:label="@string/add_item"
+			android:name=".ExpenseItemsActivity"
+			android:parentActivityName=".MainActivity">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.ci.shopper.MainActivity" />
 		</activity>
 		
 		<provider

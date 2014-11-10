@@ -26,7 +26,7 @@
 
 			<TextView
 				android:layout_height="wrap_content"
-				android:text="\u20A6 20,000.00"
+				android:text="@string/zero_naira"
 				android:textAppearance="?android:attr/textAppearanceLarge"
 				android:layout_width="wrap_content"/>
 
@@ -52,6 +52,19 @@
 		android:layout_height="wrap_content"
 		android:isScrollContainer="false"
 		android:id="@+id/categoriesListView"/>
+	
+	<TextView
+		android:id="@+id/emptyView"
+		android:layout_height="match_parent"
+		android:text="@string/empty_list"
+		android:layout_width="match_parent"
+		android:layout_gravity="center"
+		android:padding="10dp"/>
 
+	<ExpandableListView
+		android:id="@+id/lvExp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
+	
 </LinearLayout>
 

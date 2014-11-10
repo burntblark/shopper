@@ -32,10 +32,10 @@ public class CategoryEditActivity extends Activity
 			setTitle(R.string.edit_category);
 			
 			((EditText)findViewById(R.id.catName)).setText(cursor.getString(1));
-			((EditText)findViewById(R.id.catDesc)).setText(cursor.getString(2));
+			//((EditText)findViewById(R.id.catDesc)).setText(cursor.getString(2));
 		}
 		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		//getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 	
 	@Override
@@ -54,7 +54,7 @@ public class CategoryEditActivity extends Activity
 			ContentValues values = new ContentValues();
 			
 			values.put("name", ((EditText) findViewById(R.id.catName)).getText().toString());
-			values.put("description", ((EditText) findViewById(R.id.catDesc)).getText().toString());
+			//values.put("description", ((EditText) findViewById(R.id.catDesc)).getText().toString());
 			
 			if(categoryUri == null){
 				categoryUri = getContentResolver().insert(CategoryContentProvider.CONTENT_URI, values);
