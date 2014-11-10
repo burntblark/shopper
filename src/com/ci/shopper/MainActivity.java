@@ -3,16 +3,16 @@ package com.ci.shopper;
 import android.app.*;
 import android.content.*;
 import android.os.*;
+import android.support.v4.widget.*;
 import android.view.*;
 import android.view.ContextMenu.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
-
 import com.ci.shopper.db.*;
+import com.ci.shopper.dialog.*;
 import com.ci.shopper.fragment.*;
-
-import android.support.v4.widget.*;
-
+import android.support.v4.app.ActionBarDrawerToggle;
+//import android.support.v4.app.Fragment;
 
 public class MainActivity extends Activity
 {
@@ -25,7 +25,8 @@ public class MainActivity extends Activity
 	private FrameLayout frame;
 
 	private Fragment dashboard;
-
+	
+	
     @Override
     public void onCreate(Bundle savedInstanceState)
 	{
@@ -34,6 +35,27 @@ public class MainActivity extends Activity
 		
 		setLeftDrawer((DrawerLayout) findViewById(R.id.drawer_layout));
 		setContentFrame((FrameLayout) findViewById(R.id.content_frame));
+		
+		getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, getLeftDrawer(),
+												  R.drawable.ic_drawer, R.string.drawer_open,
+												  R.string.drawer_close) {
+
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                //Set the title on the action when drawer open
+                //getActionBar().setTitle(mDrawerTitle);
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        getLeftDrawer().setDrawerListener(mDrawerToggle);
+		
 		
 		initialize();
 	}
@@ -67,15 +89,22 @@ public class MainActivity extends Activity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		if (item.getItemId() == R.id.category_add)
-		{
-			Intent intent = new Intent(this, CategoryEditActivity.class);
-			startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
-			return true;
+		switch(item.getItemId()){
+			case R.id.item_add:
+				DialogFragment dialog = new ItemEditDialog();
+				dialog.show(getFragmentManager(), "CategoryEditDialog");
+			
+				return true;
+			case R.id.expense_new:
+				Intent intent = new Intent(this, ExpenseItemsActivity.class);
+				startActivity(intent);
+				
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
+	
 	
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {

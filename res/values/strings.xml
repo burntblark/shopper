@@ -11,15 +11,21 @@
 	<string name="edit_item">Edit Item</string>
 	<string name="delete_category">Delete Category</string>
 	<string name="new_expense">New Expense</string>
-	<string name="summary_hint">View how you have spent 0.00 this cycle.</string>
+	<string name="summary_hint">View how you have spent \u20A6 0.00 this cycle.</string>
+	<string name="empty_list">No Records</string>
+	<string name="ok">Ok</string>
+	<string name="cancel">Cancel</string>
+	<string name="drawer_open">Open</string>
+	<string name="drawer_close">Close</string>
 	
-	<string-array name="budget_cycle">
-		<item>20 &#8211; 19 Nov</item>
-		<item>20 &#8211; 19 Oct</item>
-		<item>20 &#8211; 19 Sep</item>
-		<item>20 &#8211; 19 Aug</item>
-		<item>20 &#8211; 19 Jul</item>
+	<string-array name="drawer_menu">
+		<item>Home</item>
+		<item>Shopping list</item>
+		<item>Expenditure</item>
+		<item>Locations</item>
+		<item>Marketplaces</item>
 	</string-array>
+	
 		<string name="zero_naira">\u20A6 0.00</string>
 		<string name="dummy_item_name">Item Name</string>
 		<string name="done">Done</string>
