@@ -63,7 +63,6 @@ public class ExpenseEditDialog extends DialogFragment
 		return dialog;
 	}
 
-	@Override
 	public void show(FragmentManager manager, String tag, View v)
 	{
 		// TODO: Implement this method

@@ -1,5 +1,9 @@
 package com.ci.shopper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
@@ -8,9 +12,11 @@ import android.view.*;
 import android.view.ContextMenu.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
+
 import com.ci.shopper.db.*;
-import com.ci.shopper.dialog.*;
+import com.ci.shopper.dialog.ItemEditDialog;
 import com.ci.shopper.fragment.*;
+
 import android.support.v4.app.ActionBarDrawerToggle;
 //import android.support.v4.app.Fragment;
 
@@ -26,6 +32,8 @@ public class MainActivity extends Activity
 
 	private Fragment dashboard;
 	
+	private ListView mDrawerList;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -35,6 +43,8 @@ public class MainActivity extends Activity
 		
 		setLeftDrawer((DrawerLayout) findViewById(R.id.drawer_layout));
 		setContentFrame((FrameLayout) findViewById(R.id.content_frame));
+	    
+	    mDrawerList = (ListView) findViewById(R.id.left_drawer_menu);
 		
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,6 +77,56 @@ public class MainActivity extends Activity
 				.beginTransaction()
 				.replace(R.id.content_frame, dashboard)
 				.commit();
+		
+
+		
+		String[] names = new String[]{
+	            "Dashboard",
+	            "Expenditure",
+	            "Locations",
+	            "Settings",
+	            //"Sports",
+	            };
+
+	    /*Array of Images*/
+	    int[] image = new int[] {
+	            R.drawable.ic_action_accept,
+	            R.drawable.ic_action_accept,
+	            R.drawable.ic_action_accept, 
+	            R.drawable.ic_action_accept,
+	            //R.drawable.ic_action_accept,
+	    };
+
+	    List<HashMap<String, String>> listinfo = new ArrayList<HashMap<String, String>>();
+	    listinfo.clear();
+	    for(int i=0;i<names.length;i++){
+	        HashMap<String, String> hm = new HashMap<String, String>();
+	        hm.put("name", names[i]);
+	        hm.put("image", Integer.toString(image[i]));
+	        listinfo.add(hm);
+	    }
+
+	    // Keys used in Hashmap
+	    final String[] from = { "image", "name" };
+	    int[] to = { R.id.img, R.id.txt };
+
+
+	    SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), listinfo, R.layout.drawer_list_item, from, to){
+	        @Override
+	        public View getView(int pos, View convertView, ViewGroup parent){
+	            View v = convertView;
+	            if(v== null){
+	                LayoutInflater vi = (LayoutInflater)getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
+	                v=vi.inflate(R.layout.drawer_list_item, null);
+	            }
+	            TextView tv = (TextView)v.findViewById(R.id.txt);
+	            tv.setText("");
+	            //tv.setTypeface(faceBold);
+	            return v;
+	        }
+	    };
+	    
+	    mDrawerList.setAdapter(adapter);
 	}
 
 	public DrawerLayout getLeftDrawer() {
