@@ -5,16 +5,34 @@ import android.content.*;
 import android.database.*;
 import android.os.*;
 import android.view.*;
+import android.widget.*;
 import com.ci.shopper.*;
 
 public class ExpensesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
+	private ListView listView;
+	private View view;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(R.layout.expenses, container, false);
+		view = inflater.inflate(R.layout.expenses, container, false);
 		return view;
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		
+		listView = (ListView) getView().findViewById(R.id.expense_list);
+
+		View header = view
+				.inflate(getActivity().getBaseContext(), R.layout.expense_list_header, null);
+				
+		listView.addHeaderView(header);
+		
+	}	
 	
 	@Override
 	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)

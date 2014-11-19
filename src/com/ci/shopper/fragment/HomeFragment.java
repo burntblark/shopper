@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 		    getActivity().getApplicationContext() // context
 		    , "Perfomance" // heading
 		);
+		
 		graphView.addSeries(exampleSeries); // data
 
 		LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.summary_chart);
