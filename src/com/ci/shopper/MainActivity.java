@@ -27,12 +27,18 @@ public class MainActivity extends Activity
 	private static final int EDIT_ITEM_REQUEST = 2;
 
 	private DrawerLayout drawer;
+    private View leftDrawer;
+    private View rightDrawer;
 
 	private FrameLayout frame;
 
 	private Fragment dashboard;
 	
 	private ListView mDrawerList;
+    private ListView rightDrawerList;
+
+    ActionBarDrawerToggle mDrawerToggle;
+    ActionBarDrawerToggle rightDrawerToggle;
 	
 	
     @Override
@@ -42,14 +48,17 @@ public class MainActivity extends Activity
         setContentView(R.layout.left_drawer);
 		
 		setLeftDrawer((DrawerLayout) findViewById(R.id.drawer_layout));
+        rightDrawer = (View) findViewById(R.id.right_drawer_menu);
+        leftDrawer = (View) findViewById(R.id.left_drawer_menu);
 		setContentFrame((FrameLayout) findViewById(R.id.content_frame));
 	    
 	    mDrawerList = (ListView) findViewById(R.id.left_drawer_menu);
 		
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, getLeftDrawer(),
+//        rightDrawerToggle = new ActionBarDrawerToggle(this,rightDrawer,R.drawable.ic_drawer, R.string.drawer_open,R.string.drawer_close);
+//		rightDrawer.setDrawerListener(rightDrawerToggle);
+		mDrawerToggle = new ActionBarDrawerToggle(this, getLeftDrawer(),
 												  R.drawable.ic_drawer, R.string.drawer_open,
 												  R.string.drawer_close) {
 
@@ -142,14 +151,21 @@ public class MainActivity extends Activity
 	{
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
-
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		switch(item.getItemId()){
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            drawer.closeDrawer(rightDrawer);
+            return true;
+        }else if(item.getItemId()==R.id.category_add){
+            drawer.closeDrawer(leftDrawer);
+            drawer.openDrawer(rightDrawer);
+            return  true;
+        }
+		/*switch(item.getItemId()){
 			case R.id.item_add:
 				DialogFragment dialog = new ItemEditDialog();
 				dialog.show(getFragmentManager(), "CategoryEditDialog");
@@ -160,7 +176,7 @@ public class MainActivity extends Activity
 				startActivity(intent);
 				
 				return true;
-		}
+		}*/
 
 		return super.onOptionsItemSelected(item);
 	}

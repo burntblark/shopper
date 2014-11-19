@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:paddingTop="15dp"
+	android:paddingBottom="15dp"
+	android:paddingLeft="5dp"
+	android:paddingRight="5dp">
+
+	<CheckBox
+		android:id="@+id/checkBox1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:focusable="false"
+		android:focusableInTouchMode="false"
+		android:layout_gravity="center_vertical"
+		android:clickable="false"
+		android:layout_weight="0"
+		android:padding="0dp"/>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_weight="1">
+
+		<TextView
+			android:id="@+id/expItemName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"/>
+
+		<TextView
+			android:id="@+id/expItemCatName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="14sp"
+			android:text="Item Category"
+			android:alpha=".7"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_weight="0"
+		android:layout_gravity="right">
+
+		<TextView
+			android:id="@+id/expItemCost"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:text="@string/zero_naira"
+			android:layout_gravity="right"/>
+
+		<TextView
+			android:id="@+id/expItemDate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="14sp"
+			android:alpha=".7"
+			android:text="Sep 12"
+			android:textAlignment="textEnd"
+			android:layout_gravity="right"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+
+<!-- From: file:/C:/Users/toniton/AndroidStudioProjects/Shopper/res/layout/expense_item_row.xml -->

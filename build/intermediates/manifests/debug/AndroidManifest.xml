@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ci.shopper"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="20" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo.Light" >
+        <activity
+            android:name="com.ci.shopper.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.ci.shopper.CategoryEditActivity"
+            android:label="@string/add_category"
+            android:parentActivityName="com.ci.shopper.MainActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ci.shopper.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.ci.shopper.CategoryViewActivity"
+            android:label="Category"
+            android:parentActivityName="com.ci.shopper.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ci.shopper.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.ci.shopper.ItemEditActivity"
+            android:label="@string/add_item"
+            android:parentActivityName="com.ci.shopper.CategoryViewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ci.shopper.CategoryViewActivity" />
+        </activity>
+        <activity
+            android:name="com.ci.shopper.ExpenseItemsActivity"
+            android:label="@string/add_item"
+            android:parentActivityName="com.ci.shopper.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ci.shopper.MainActivity" />
+        </activity>
+
+        <provider
+            android:name="com.ci.shopper.provider.CategoryContentProvider"
+            android:authorities="com.ci.shopper.provider.Category" >
+        </provider>
+        <provider
+            android:name="com.ci.shopper.provider.ItemContentProvider"
+            android:authorities="com.ci.shopper.provider.Item" >
+        </provider>
+    </application>
+
+</manifest>
