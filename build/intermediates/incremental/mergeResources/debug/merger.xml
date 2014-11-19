@@ -289,9 +289,11 @@
                 </string>
                 <string name="delete_category" >Delete Category
                 </string>
+                <string name="cancel" >Cancel
+                </string>
                 <string name="zero_naira" >\u20A6 0.00
                 </string>
-                <string name="cancel" >Cancel
+                <string name="item_edited" >Item saved!
                 </string>
 
                 <string-array name="drawer_menu" >
@@ -312,8 +314,6 @@ Marketplaces
                     </item>
                 </string-array>
 
-                <string name="item_edited" >Item saved!
-                </string>
                 <string name="new_expense" >New Expense
                 </string>
                 <string name="ok" >Ok
@@ -327,6 +327,21 @@ Marketplaces
                 <string name="summary_hint" >View how you have spent \u20A6 0.00 this cycle.
                 </string>
             </file>
+            <file
+                name="expense_list_item"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expense_list_item.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expenses"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expenses.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expense_list_header"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expense_list_header.xml"
+                qualifiers=""
+                type="layout" />
         </source>
         <source path="C:\Users\toniton\AndroidStudioProjects\Shopper\build\generated\res\rs\debug" />
         <source path="C:\Users\toniton\AndroidStudioProjects\Shopper\build\generated\res\generated\debug" />

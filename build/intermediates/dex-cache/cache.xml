@@ -2,12 +2,6 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\toniton\AndroidStudioProjects\Shopper\build\intermediates\pre-dexed\debug\support-v4-19.1.0-e311e493b238b75da4095bd5ee7b69d76d73dc42.jar"
-        jar="C:\Program Files (x86)\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
-    <item
         dex="C:\Users\toniton\AndroidStudioProjects\Shopper\build\intermediates\pre-dexed\debug\android-support-v4-2773b25b5fe35e51e75f3224bfaa17074cc70dff.jar"
         jar="C:\Users\toniton\AndroidStudioProjects\Shopper\libs\android-support-v4.jar"
         jumboMode="false"

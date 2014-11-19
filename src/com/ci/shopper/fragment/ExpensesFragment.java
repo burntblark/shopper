@@ -25,13 +25,15 @@ public class ExpensesFragment extends Fragment implements LoaderManager.LoaderCa
 	{
 		super.onActivityCreated(savedInstanceState);
 		
-		listView = (ListView) getView().findViewById(R.id.expense_list);
+		listView = (ListView) view.findViewById(R.id.expense_list);
 
 		View header = view
 				.inflate(getActivity().getBaseContext(), R.layout.expense_list_header, null);
 				
 		listView.addHeaderView(header);
-		
+        String[] vest = {};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1,vest);
+        listView.setAdapter(adapter);
 	}	
 	
 	@Override
