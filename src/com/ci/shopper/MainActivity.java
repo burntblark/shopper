@@ -90,7 +90,7 @@ public class MainActivity extends Activity
 
 	    /*Array of Images*/
 	    int[] image = new int[] {
-	            R.drawable.ic_action_accept,
+	            R.drawable.ic_action_overflow,
 	            R.drawable.ic_action_accept,
 	            R.drawable.ic_action_accept, 
 	            R.drawable.ic_action_accept,
@@ -108,7 +108,7 @@ public class MainActivity extends Activity
 
 	    // Keys used in Hashmap
 	    final String[] from = { "image", "name" };
-	    int[] to = { R.id.img, R.id.txt };
+	    final int[] to = {R.id.img, R.id.txt};
 
 
 	    SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), listinfo, R.layout.drawer_list_item, from, to){
@@ -117,17 +117,57 @@ public class MainActivity extends Activity
 	            View v = convertView;
 	            if(v== null){
 	                LayoutInflater vi = (LayoutInflater)getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
-	                v=vi.inflate(android.R.layout.simple_list_item_1, null);
+	                v=vi.inflate(R.layout.drawer_list_item, null);
 	            }
-	            TextView tv = (TextView)v.findViewById(android.R.id.text1);
+	            TextView tv = (TextView)v.findViewById(to[1]);
 				HashMap<String, String> obj = listinfo.get(pos);
 	            tv.setText(obj.get(from[1]));
 	            //tv.setTypeface(faceBold);
+				
+				ImageView img = (ImageView)v.findViewById(to[0]);
+				img.setImageResource(Integer.parseInt(obj.get(from[0])));
 	            return v;
 	        }
 	    };
 	    
 	    mDrawerList.setAdapter(adapter);
+		
+		mDrawerList.setOnItemClickListener(new OnItemClickListener(){
+
+				Fragment fragment;
+				
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+				{
+					// TODO: Implement this method
+					selectItem(position);
+				}
+				
+				private void selectItem(int position) {
+					switch (position) {
+						default:
+						case 0:
+							fragment = new HomeFragment();
+							break;
+						case 1:
+							fragment = new ExpensesFragment();
+							break;
+						
+					}
+					
+					// Insert the fragment by replacing any existing fragment
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction()
+						.replace(R.id.content_frame, fragment)
+						.commit();
+
+					// Highlight the selected item, update the title, and close the drawer
+					mDrawerList.setItemChecked(position, true);
+					//setTitle(mPlanetTitles[position]);
+					getLeftDrawer().closeDrawer(mDrawerList);
+				}
+			
+		});
 	}
 
 	public DrawerLayout getLeftDrawer() {
