@@ -106,7 +106,7 @@ public class MainActivity extends Activity
 	            //R.drawable.ic_action_accept,
 	    };
 
-	    List<HashMap<String, String>> listinfo = new ArrayList<HashMap<String, String>>();
+	    final List<HashMap<String, String>> listinfo = new ArrayList<HashMap<String, String>>();
 	    listinfo.clear();
 	    for(int i=0;i<names.length;i++){
 	        HashMap<String, String> hm = new HashMap<String, String>();
@@ -126,10 +126,11 @@ public class MainActivity extends Activity
 	            View v = convertView;
 	            if(v== null){
 	                LayoutInflater vi = (LayoutInflater)getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
-	                v=vi.inflate(R.layout.drawer_list_item, null);
+	                v=vi.inflate(android.R.layout.simple_list_item_1, null);
 	            }
-	            TextView tv = (TextView)v.findViewById(R.id.txt);
-	            tv.setText("");
+	            TextView tv = (TextView)v.findViewById(android.R.id.text1);
+				HashMap<String, String> obj = listinfo.get(pos);
+	            tv.setText(obj.get(from[1]));
 	            //tv.setTypeface(faceBold);
 	            return v;
 	        }
