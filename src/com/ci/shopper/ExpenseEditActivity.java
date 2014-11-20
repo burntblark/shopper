@@ -2,13 +2,9 @@ package com.ci.shopper;
 
 import android.app.*;
 import android.content.*;
-import android.database.*;
 import android.net.*;
 import android.os.*;
 import android.view.*;
-import android.widget.*;
-import com.ci.shopper.db.*;
-import com.ci.shopper.provider.*;
 
 public class ExpenseEditActivity extends Activity
 {
@@ -37,7 +33,7 @@ public class ExpenseEditActivity extends Activity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		if (item.getItemId() == R.id.expense_save){
-			ContentValues values = new ContentValues();
+			//ContentValues values = new ContentValues();
 			
 			setResult(RESULT_OK);
 			finish();
