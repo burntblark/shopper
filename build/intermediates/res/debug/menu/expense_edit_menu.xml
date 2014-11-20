@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item
+        android:id="@+id/expense_save"
+        android:title="@string/done"
+		android:icon="@drawable/ic_action_accept"
+		android:showAsAction="always|withText"/>
+    
+</menu>
+<!-- From: file:/C:/Users/toniton/AndroidStudioProjects/Shopper/res/menu/expense_edit_menu.xml -->

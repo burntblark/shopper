@@ -27,12 +27,18 @@ public class MainActivity extends Activity
 	private static final int EDIT_ITEM_REQUEST = 2;
 
 	private DrawerLayout drawer;
+    private View leftDrawer;
+    private View rightDrawer;
 
 	private FrameLayout frame;
 
 	private Fragment dashboard;
 	
 	private ListView mDrawerList;
+    private ListView rightDrawerList;
+
+    ActionBarDrawerToggle mDrawerToggle;
+    ActionBarDrawerToggle rightDrawerToggle;
 	
 	
     @Override
@@ -42,14 +48,17 @@ public class MainActivity extends Activity
         setContentView(R.layout.left_drawer);
 		
 		setLeftDrawer((DrawerLayout) findViewById(R.id.drawer_layout));
+        rightDrawer = (View) findViewById(R.id.right_drawer_menu);
+        leftDrawer = (View) findViewById(R.id.left_drawer_menu);
 		setContentFrame((FrameLayout) findViewById(R.id.content_frame));
 	    
 	    mDrawerList = (ListView) findViewById(R.id.left_drawer_menu);
 		
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, getLeftDrawer(),
+//        rightDrawerToggle = new ActionBarDrawerToggle(this,rightDrawer,R.drawable.ic_drawer, R.string.drawer_open,R.string.drawer_close);
+//		rightDrawer.setDrawerListener(rightDrawerToggle);
+		mDrawerToggle = new ActionBarDrawerToggle(this, getLeftDrawer(),
 												  R.drawable.ic_drawer, R.string.drawer_open,
 												  R.string.drawer_close) {
 
@@ -90,14 +99,14 @@ public class MainActivity extends Activity
 
 	    /*Array of Images*/
 	    int[] image = new int[] {
-	            R.drawable.ic_action_accept,
+	            R.drawable.ic_action_overflow,
 	            R.drawable.ic_action_accept,
 	            R.drawable.ic_action_accept, 
 	            R.drawable.ic_action_accept,
 	            //R.drawable.ic_action_accept,
 	    };
 
-	    List<HashMap<String, String>> listinfo = new ArrayList<HashMap<String, String>>();
+	    final List<HashMap<String, String>> listinfo = new ArrayList<HashMap<String, String>>();
 	    listinfo.clear();
 	    for(int i=0;i<names.length;i++){
 	        HashMap<String, String> hm = new HashMap<String, String>();
@@ -108,7 +117,7 @@ public class MainActivity extends Activity
 
 	    // Keys used in Hashmap
 	    final String[] from = { "image", "name" };
-	    int[] to = { R.id.img, R.id.txt };
+	    final int[] to = {R.id.img, R.id.txt};
 
 
 	    SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), listinfo, R.layout.drawer_list_item, from, to){
@@ -119,14 +128,55 @@ public class MainActivity extends Activity
 	                LayoutInflater vi = (LayoutInflater)getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
 	                v=vi.inflate(R.layout.drawer_list_item, null);
 	            }
-	            TextView tv = (TextView)v.findViewById(R.id.txt);
-	            tv.setText("");
+	            TextView tv = (TextView)v.findViewById(to[1]);
+				HashMap<String, String> obj = listinfo.get(pos);
+	            tv.setText(obj.get(from[1]));
 	            //tv.setTypeface(faceBold);
+				
+				ImageView img = (ImageView)v.findViewById(to[0]);
+				img.setImageResource(Integer.parseInt(obj.get(from[0])));
 	            return v;
 	        }
 	    };
 	    
 	    mDrawerList.setAdapter(adapter);
+		
+		mDrawerList.setOnItemClickListener(new OnItemClickListener(){
+
+				Fragment fragment;
+				
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+				{
+					// TODO: Implement this method
+					selectItem(position);
+				}
+				
+				private void selectItem(int position) {
+					switch (position) {
+						default:
+						case 0:
+							fragment = new HomeFragment();
+							break;
+						case 1:
+							fragment = new ExpensesFragment();
+							break;
+						
+					}
+					
+					// Insert the fragment by replacing any existing fragment
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction()
+						.replace(R.id.content_frame, fragment)
+						.commit();
+
+					// Highlight the selected item, update the title, and close the drawer
+					mDrawerList.setItemChecked(position, true);
+					//setTitle(mPlanetTitles[position]);
+					getLeftDrawer().closeDrawer(mDrawerList);
+				}
+			
+		});
 	}
 
 	public DrawerLayout getLeftDrawer() {
@@ -142,14 +192,21 @@ public class MainActivity extends Activity
 	{
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
-
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		switch(item.getItemId()){
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            drawer.closeDrawer(rightDrawer);
+            return true;
+        }else if(item.getItemId()==R.id.category_add){
+            drawer.closeDrawer(leftDrawer);
+            drawer.openDrawer(rightDrawer);
+            return  true;
+        }
+		/*switch(item.getItemId()){
 			case R.id.item_add:
 				DialogFragment dialog = new ItemEditDialog();
 				dialog.show(getFragmentManager(), "CategoryEditDialog");
@@ -160,7 +217,7 @@ public class MainActivity extends Activity
 				startActivity(intent);
 				
 				return true;
-		}
+		}*/
 
 		return super.onOptionsItemSelected(item);
 	}

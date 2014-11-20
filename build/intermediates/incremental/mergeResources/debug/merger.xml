@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="C:\Users\toniton\AndroidStudioProjects\Shopper\res" >
+            <file
+                name="drawer_shadow"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-hdpi\drawer_shadow.9.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_accept"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-hdpi\ic_action_accept.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_new"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-hdpi\ic_action_new.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_overflow"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-hdpi\ic_action_overflow.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_refresh"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-hdpi\ic_action_refresh.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_remove"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-hdpi\ic_action_remove.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_drawer"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-hdpi\ic_drawer.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-hdpi\ic_launcher.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="drawer_shadow"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-mdpi\drawer_shadow.9.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_accept"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-mdpi\ic_action_accept.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_new"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-mdpi\ic_action_new.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_overflow"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-mdpi\ic_action_overflow.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_refresh"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-mdpi\ic_action_refresh.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_remove"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-mdpi\ic_action_remove.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_drawer"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-mdpi\ic_drawer.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-mdpi\ic_launcher.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="drawer_shadow"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xhdpi\drawer_shadow.9.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_accept"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xhdpi\ic_action_accept.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_new"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xhdpi\ic_action_new.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_overflow"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xhdpi\ic_action_overflow.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_refresh"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xhdpi\ic_action_refresh.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_remove"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xhdpi\ic_action_remove.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_drawer"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xhdpi\ic_drawer.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xhdpi\ic_launcher.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="drawer_shadow"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xxhdpi\drawer_shadow.9.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_accept"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xxhdpi\ic_action_accept.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_new"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xxhdpi\ic_action_new.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_overflow"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xxhdpi\ic_action_overflow.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_refresh"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xxhdpi\ic_action_refresh.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_remove"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xxhdpi\ic_action_remove.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_drawer"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xxhdpi\ic_drawer.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\drawable-xxhdpi\ic_launcher.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="budget_widget"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\budget_widget.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="category_edit"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\category_edit.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="category_row"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\category_row.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="category_view"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\category_view.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="cat_summary_header"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\cat_summary_header.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="drawer_list_item"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\drawer_list_item.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expense_edit"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expense_edit.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expense_item_row"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expense_item_row.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expense_view"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expense_view.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="item_edit"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\item_edit.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="item_row"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\item_row.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="left_drawer"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\left_drawer.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="main"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\main.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="category_context_menu"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\menu\category_context_menu.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="category_edit_menu"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\menu\category_edit_menu.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="category_view_menu"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\menu\category_view_menu.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="expense_edit_menu"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\menu\expense_edit_menu.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="item_edit_menu"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\menu\item_edit_menu.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="main_menu"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\menu\main_menu.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\values\colors.xml"
+                qualifiers="" >
+                <color name="black" >#252525
+                </color>
+            </file>
+            <file
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\values\strings.xml"
+                qualifiers="" >
+                <string name="edit_category" >Edit Category
+                </string>
+                <string name="done" >Done
+                </string>
+                <string name="add_category" >Add Expense Category
+                </string>
+                <string name="change_budget" >Change Budget Cycle
+                </string>
+                <string name="img_desc" >Image Description
+                </string>
+                <string name="add_item" >Add Item
+                </string>
+                <string name="category_edited" >Category saved!
+                </string>
+                <string name="empty_list" >No Records
+                </string>
+                <string name="drawer_close" >Close
+                </string>
+                <string name="edit_item" >Edit Item
+                </string>
+                <string name="delete_category" >Delete Category
+                </string>
+                <string name="cancel" >Cancel
+                </string>
+                <string name="zero_naira" >\u20A6 0.00
+                </string>
+                <string name="item_edited" >Item saved!
+                </string>
+
+                <string-array name="drawer_menu" >
+                    <item>
+Home
+                    </item>
+                    <item>
+Shopping list
+                    </item>
+                    <item>
+Expenditure
+                    </item>
+                    <item>
+Locations
+                    </item>
+                    <item>
+Marketplaces
+                    </item>
+                </string-array>
+
+                <string name="new_expense" >New Expense
+                </string>
+                <string name="ok" >Ok
+                </string>
+                <string name="dummy_item_name" >Item Name
+                </string>
+                <string name="app_name" >Shopper
+                </string>
+                <string name="drawer_open" >Open
+                </string>
+                <string name="summary_hint" >View how you have spent \u20A6 0.00 this cycle.
+                </string>
+            </file>
+            <file
+                name="expense_list_item"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expense_list_item.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expenses"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expenses.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="expense_list_header"
+                path="C:\Users\toniton\AndroidStudioProjects\Shopper\res\layout\expense_list_header.xml"
+                qualifiers=""
+                type="layout" />
+        </source>
+        <source path="C:\Users\toniton\AndroidStudioProjects\Shopper\build\generated\res\rs\debug" />
+        <source path="C:\Users\toniton\AndroidStudioProjects\Shopper\build\generated\res\generated\debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\Users\toniton\AndroidStudioProjects\Shopper\build-types\debug\res" />
+    </dataSet>
+
+</merger>
