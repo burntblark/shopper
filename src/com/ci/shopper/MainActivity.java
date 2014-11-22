@@ -1,41 +1,28 @@
 package com.ci.shopper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.app.*;
-import android.content.*;
+import android.content.res.*;
 import android.os.*;
+import android.support.v4.app.*;
 import android.support.v4.widget.*;
 import android.view.*;
-import android.view.ContextMenu.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
-
-import com.ci.shopper.db.*;
-import com.ci.shopper.dialog.ItemEditDialog;
 import com.ci.shopper.fragment.*;
+import java.util.*;
 
-import android.support.v4.app.ActionBarDrawerToggle;
-//import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
 
 public class MainActivity extends Activity
 {
-	private static final int EDIT_CATEGORY_REQUEST = 1;
-
-	private static final int EDIT_ITEM_REQUEST = 2;
-
 	private DrawerLayout drawer;
     private View leftDrawer;
     private View rightDrawer;
 
 	private FrameLayout frame;
 
-	private Fragment dashboard;
-
 	private ListView mDrawerList;
-    private ListView rightDrawerList;
 
     ActionBarDrawerToggle mDrawerToggle;
     ActionBarDrawerToggle rightDrawerToggle;
@@ -47,15 +34,15 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.left_drawer);
 
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
 		setLeftDrawer((DrawerLayout) findViewById(R.id.drawer_layout));
         rightDrawer = findViewById(R.id.right_drawer_menu);
         leftDrawer = findViewById(R.id.left_drawer_menu);
 		setContentFrame((FrameLayout) findViewById(R.id.content_frame));
 
 	    mDrawerList = (ListView) findViewById(R.id.left_drawer_menu);
-
-		//getActionBar().setHomeButtonEnabled(true);
-		//getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, getLeftDrawer(),
 												  R.drawable.ic_drawer, 
@@ -73,20 +60,18 @@ public class MainActivity extends Activity
                 //getActionBar().setTitle(mDrawerTitle);
                 super.onDrawerOpened(drawerView);
             }
-			
-			
+
+
         };
 
         getLeftDrawer().setDrawerListener(mDrawerToggle);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
 		initialize();
 	}
-	
+
 	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
+	protected void onPostCreate(Bundle savedInstanceState)
+	{
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
@@ -94,40 +79,29 @@ public class MainActivity extends Activity
 
 	private void initialize()
 	{
-		dashboard = new HomeFragment();
-
-		getFragmentManager()
-			.beginTransaction()
-			.replace(R.id.content_frame, dashboard)
-			.commit();
-
-
-
 		String[] names = new String[]{
-			"Dashboard",
+			"Overview",
 			"Expenditure",
-			"Locations",
-			"Settings",
-			//"Sports",
+			"Items",
+			"Preferences"
 		};
 
 	    /*Array of Images*/
-	    int[] image = new int[] {
+	    int[] icons = new int[] {
 			R.drawable.ic_action_overflow,
 			R.drawable.ic_action_accept,
-			R.drawable.ic_action_accept, 
-			R.drawable.ic_action_accept,
-			//R.drawable.ic_action_accept,
+			R.drawable.ic_action_new, 
+			R.drawable.ic_action_overflow
 	    };
 
 	    final List<HashMap<String, String>> listinfo = new ArrayList<HashMap<String, String>>();
 	    listinfo.clear();
-	    for (int i=0;i < names.length;i++)
+	    for (int i=0;i < Math.min(names.length, icons.length);i++)
 		{
-	        HashMap<String, String> hm = new HashMap<String, String>();
-	        hm.put("name", names[i]);
-	        hm.put("image", Integer.toString(image[i]));
-	        listinfo.add(hm);
+	        HashMap<String, String> menuInfo = new HashMap<String, String>();
+	        menuInfo.put("name", names[i]);
+	        menuInfo.put("image", Integer.toString(icons[i]));
+	        listinfo.add(menuInfo);
 	    }
 
 	    // Keys used in Hashmap
@@ -148,7 +122,6 @@ public class MainActivity extends Activity
 	            TextView tv = (TextView)v.findViewById(to[1]);
 				HashMap<String, String> obj = listinfo.get(pos);
 	            tv.setText(obj.get(from[1]));
-	            //tv.setTypeface(faceBold);
 
 				ImageView img = (ImageView)v.findViewById(to[0]);
 				img.setImageResource(Integer.parseInt(obj.get(from[0])));
@@ -158,45 +131,71 @@ public class MainActivity extends Activity
 
 	    mDrawerList.setAdapter(adapter);
 
-		mDrawerList.setOnItemClickListener(new OnItemClickListener(){
+		mDrawerList.setOnItemClickListener((new OnItemClickListener(){
 
-				Fragment fragment;
+											   Fragment fragment;
 
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-				{
-					// TODO: Implement this method
-					selectItem(position);
-				}
+											   @Override
+											   public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+											   {
+												   selectItem(position);
+											   }
 
-				private void selectItem(int position)
-				{
-					switch (position)
-					{
-						default:
-						case 0:
-							fragment = new HomeFragment();
-							break;
-						case 1:
-							fragment = new ExpensesFragment();
-							break;
+											   private OnItemClickListener selectItem(int position)
+											   {
+												   switch (position)
+												   {
+													   default:
+													   case 0:
+														   fragment = new HomeFragment();
+														   break;
+													   case 1:
+														   fragment = new ExpensesFragment();
+														   break;
+													   case 2:
+														   fragment = new ItemsFragment();
+														   break;
 
-					}
+												   }
 
-					// Insert the fragment by replacing any existing fragment
-					FragmentManager fragmentManager = getFragmentManager();
-					fragmentManager.beginTransaction()
-						.replace(R.id.content_frame, fragment)
-						.commit();
+												   // Insert the fragment by replacing any existing fragment
+												   FragmentManager fragmentManager = getFragmentManager();
+												   fragmentManager.beginTransaction()
+													   .replace(R.id.content_frame, fragment)
+													   .commit();
 
-					// Highlight the selected item, update the title, and close the drawer
-					mDrawerList.setItemChecked(position, true);
-					//setTitle(mPlanetTitles[position]);
-					getLeftDrawer().closeDrawer(mDrawerList);
-				}
+												   // Highlight the selected item, update the title, and close the drawer
+												   mDrawerList.setItemChecked(position, true);
+												   getLeftDrawer().closeDrawer(mDrawerList);
 
-			});
+												   return this;
+											   }
+
+										   }).selectItem(0));
 	}
+
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+		super.onConfigurationChanged(newConfig);
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		// Pass the event to ActionBarDrawerToggle, if it returns
+		// true, then it has handled the app icon touch event
+		if (mDrawerToggle.onOptionsItemSelected(item))
+		{
+			return true;
+		}
+		// Handle your other action bar items...
+
+		return super.onOptionsItemSelected(item);
+	}
+
 
 	public DrawerLayout getLeftDrawer()
 	{
@@ -208,84 +207,9 @@ public class MainActivity extends Activity
 		this.drawer = drawer;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
+	public ActionBarDrawerToggle getDrawerToggle()
 	{
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-        if (mDrawerToggle.onOptionsItemSelected(item))
-		{
-            drawer.closeDrawer(rightDrawer);
-            return true;
-        }
-		else if (item.getItemId() == R.id.category_add)
-		{
-            drawer.closeDrawer(leftDrawer);
-            drawer.openDrawer(rightDrawer);
-            return  true;
-        }
-		/*switch(item.getItemId()){
-		 case R.id.item_add:
-		 DialogFragment dialog = new ItemEditDialog();
-		 dialog.show(getFragmentManager(), "CategoryEditDialog");
-
-		 return true;
-		 case R.id.expense_new:
-		 Intent intent = new Intent(this, ExpenseItemsActivity.class);
-		 startActivity(intent);
-
-		 return true;
-		 }*/
-
-		return super.onOptionsItemSelected(item);
-	}
-
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
-	{
-		if (v.getId() == R.id.categoriesListView)
-		{
-			AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-			String title = (String) ((TextView) info.targetView
-                .findViewById(R.id.categoryName)).getText();
-			menu.setHeaderTitle(title);
-			MenuInflater inflater = getMenuInflater();
-			inflater.inflate(R.menu.category_context_menu, menu);
-		}
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item)
-	{
-		AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-		long _id = menuinfo.id; //_id from database in this case
-		//to get the position in the adapter -> menuinfo.position
-		switch (item.getItemId())
-		{
-			case R.id.category_edit:
-				Intent intent = new Intent(getApplicationContext(), CategoryEditActivity.class);
-				intent.putExtra(CategoriesTable._ID, _id);
-				startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
-				break;
-			case R.id.category_add_item:
-				Intent intent2 = new Intent(getApplicationContext(), ItemEditActivity.class);
-				intent2.putExtra("catId", _id);
-				startActivityForResult(intent2, EDIT_ITEM_REQUEST);
-				break;
-			case R.id.category_delete:
-				Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_LONG).show();
-				break;
-			default: break;
-		}
-
-		return super.onContextItemSelected(item);
+		return mDrawerToggle;
 	}
 
 	public FrameLayout getContentFrame()

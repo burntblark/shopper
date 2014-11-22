@@ -5,22 +5,37 @@ import android.content.*;
 import android.database.*;
 import android.os.*;
 import android.view.*;
+import android.view.ContextMenu.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
+import android.widget.ExpandableListView.*;
 import com.ci.shopper.*;
-import com.ci.shopper.widget.*;
 import com.ci.shopper.db.*;
+import com.ci.shopper.dialog.*;
 import com.ci.shopper.provider.*;
 import com.jjoe64.graphview.*;
 import com.jjoe64.graphview.GraphView.*;
-import java.util.*;
-import android.widget.ExpandableListView.*;
+
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class HomeFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
 	SimpleCursorTreeAdapter catListAdapter;
 
 	ExpandableListView catListView;
+	
+	static final int EDIT_CATEGORY_REQUEST = 1;
+
+	static final int EDIT_ITEM_REQUEST = 2;
+	
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -35,8 +50,16 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 		super.onActivityCreated(savedInstanceState);
 
 		initialize();
+	}	
 
-		fillCategories();
+	private void initialize()
+	{		
+		catListView = (ExpandableListView) getView().findViewById(R.id.lvExp);
+		TextView emptyView = (TextView) getActivity().findViewById(R.id.emptyView);
+		catListView.setEmptyView(emptyView);
+
+		View header = getActivity().getLayoutInflater().inflate(R.layout.cat_summary_header, null);
+		catListView.addHeaderView(header);
 
 		GraphViewData[] data = new GraphViewData[30];
 		double value = 0.0d;
@@ -52,19 +75,11 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 		    getActivity().getApplicationContext() // context
 		    , "Perfomance" // heading
 		);
-		
+
 		graphView.addSeries(exampleSeries); // data
 
 		LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.summary_chart);
 		layout.addView(graphView);
-	}	
-
-	private void initialize()
-	{		
-		catListView = (ExpandableListView) getView().findViewById(R.id.lvExp);
-		TextView emptyView = (TextView) getActivity().findViewById(R.id.emptyView);
-		catListView.setEmptyView(emptyView);
-
 		registerForContextMenu(catListView);
 
 		catListView.setOnItemClickListener(new OnItemClickListener(){
@@ -78,17 +93,17 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 				}
 			});
 
-		View header = getActivity().getLayoutInflater().inflate(R.layout.cat_summary_header, null);
-		catListView.addHeaderView(header);
-		
-		catListView.setOnChildClickListener( new OnChildClickListener(){
+		catListView.setOnChildClickListener(new OnChildClickListener(){
 				@Override
 				public boolean onChildClick(ExpandableListView p1, View p2, int p3, int p4, long p5)
 				{
 					Toast.makeText(getActivity(), "Opens Items Activity", Toast.LENGTH_LONG).show();
 					return false;
 				}		
-		});
+			});
+			
+		fillCategories();
+		
 	}
 
 	private void fillCategories()
@@ -115,8 +130,8 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 			{
 				long groupId = p1.getLong(0);
 				String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_DESC};
-				
-				return getActivity().getContentResolver().query(ItemContentProvider.CONTENT_URI, projection, "category_id = '"+groupId+"'", null, null);
+
+				return getActivity().getContentResolver().query(ItemContentProvider.CONTENT_URI, projection, "category_id = '" + groupId + "'", null, null);
 			}
 
 
@@ -146,4 +161,72 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 		catListAdapter.changeCursor(null);
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.main_menu, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case R.id.item_add:
+				DialogFragment dialog = new ItemEditDialog();
+				dialog.show(getFragmentManager(), "CategoryEditDialog");
+
+				return true;
+			case R.id.expense_new:
+				Intent intent = new Intent(getActivity(), ExpenseItemsActivity.class);
+				startActivity(intent);
+
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
+	{
+		if (v.getId() == R.id.categoriesListView)
+		{
+			AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+			String title = (String) ((TextView) info.targetView
+                .findViewById(R.id.categoryName)).getText();
+			menu.setHeaderTitle(title);
+			MenuInflater inflater = getActivity().getMenuInflater();
+			inflater.inflate(R.menu.category_context_menu, menu);
+		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item)
+	{
+		AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+		long _id = menuinfo.id; //_id from database in this case
+		//to get the position in the adapter -> menuinfo.position
+		switch (item.getItemId())
+		{
+			case R.id.category_edit:
+				Intent intent = new Intent(getActivity().getApplicationContext(), CategoryEditActivity.class);
+				intent.putExtra(CategoriesTable._ID, _id);
+				startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
+				break;
+			case R.id.category_add_item:
+				Intent intent2 = new Intent(getActivity().getApplicationContext(), ItemEditActivity.class);
+				intent2.putExtra("catId", _id);
+				startActivityForResult(intent2, EDIT_ITEM_REQUEST);
+				break;
+			case R.id.category_delete:
+				Toast.makeText(getActivity().getApplicationContext(), "Delete", Toast.LENGTH_LONG).show();
+				break;
+			default: break;
+		}
+
+		return super.onContextItemSelected(item);
+	}
 }
