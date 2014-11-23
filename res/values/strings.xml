@@ -10,13 +10,14 @@
 	<string name="add_item">Add Item</string>
 	<string name="edit_item">Edit Item</string>
 	<string name="delete_category">Delete Category</string>
-	<string name="new_expense">New Expense</string>
+	<string name="new_expenditure">New Expenditure</string>
 	<string name="summary_hint">View how you have spent \u20A6 0.00 this cycle.</string>
 	<string name="empty_list">No Records</string>
 	<string name="ok">Ok</string>
 	<string name="cancel">Cancel</string>
 	<string name="drawer_open">Open</string>
 	<string name="drawer_close">Close</string>
+	<string name="search">Search</string>
 	
 	<string-array name="drawer_menu">
 		<item>Home</item>

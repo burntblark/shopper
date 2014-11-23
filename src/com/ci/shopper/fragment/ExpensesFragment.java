@@ -15,6 +15,15 @@ public class ExpensesFragment extends Fragment implements
 	private View view;
 
 	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		// TODO: Implement this method
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.expenses, container, false);
@@ -36,6 +45,31 @@ public class ExpensesFragment extends Fragment implements
 				.getBaseContext(), android.R.layout.simple_list_item_1, vest);
 		listView.setAdapter(adapter);
 	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO: Implement this method
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.expenses_menu, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		// TODO: Implement this method
+		switch(item.getItemId()){
+			case R.id.expense_new:
+				Intent intent = new Intent(getActivity(), ExpenseItemsActivity.class);
+				startActivity(intent);
+				
+				return true;
+		}
+		
+		return super.onOptionsItemSelected(item);
+	}
+	
+	
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int p1, Bundle p2) {

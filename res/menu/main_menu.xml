@@ -17,7 +17,7 @@
 		android:showAsAction="ifRoom" />
     <item
 		android:id="@+id/expense_new"
-		android:title="@string/new_expense"
+		android:title="@string/new_expenditure"
 		android:icon="@drawable/ic_action_new"
 		android:showAsAction="ifRoom" />
 </menu>
