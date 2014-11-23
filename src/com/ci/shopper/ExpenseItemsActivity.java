@@ -2,51 +2,115 @@ package com.ci.shopper;
 
 import android.app.*;
 import android.content.*;
-import android.database.*;
 import android.os.*;
-import android.util.*;
 import android.view.*;
 import android.widget.*;
-import com.ci.shopper.db.*;
 import com.ci.shopper.dialog.*;
-import com.ci.shopper.provider.*;
+import java.text.*;
 import java.util.*;
 
 public class ExpenseItemsActivity extends ListActivity
 {
-	SimpleAdapter mAdapter; 		
+	ExpenseListAdapter mAdapter; 		
     LoaderManager loadermanager;		
     CursorLoader cursorLoader;
-    private static String TAG="ItemsCursorLoader";
 
-	ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
+	ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String,Object>>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		mAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.expense_item_row, 
-									 new String[] { "name", "quantity", "date", "cost" },
-									 new int[] { R.id.name, R.id.quantity, R.id.date, R.id.cost}){
-
-			
-		};
-		// Define a new Adapter
-        // First parameter - Context
-        // Second parameter - Layout for the row
-        // Third parameter - ID of the TextView to which the data is written
-        // Forth - the Array of data
-
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-        //  R.layout.content, R.id.tv_content, values);s
+		mAdapter = new ExpenseListAdapter(getApplicationContext(), data);
 
         setListAdapter(mAdapter);
 	}
 
-	public void addExpenditure(HashMap<String, String> map)
+	public void addExpenditure(HashMap<String, Object> map)
 	{
-		list.add(map);
+		data.add(map);
 		mAdapter.notifyDataSetChanged();
+	}
+
+	public class ExpenseListAdapter extends BaseAdapter
+	{
+
+		private ArrayList<HashMap<String, Object>> mData;
+
+		private LayoutInflater mInflater;
+
+		public ExpenseListAdapter(Context context, ArrayList<HashMap<String, Object>> data)
+		{
+			mData = data;
+			mInflater = LayoutInflater.from(context);
+		}
+
+		@Override
+		public int getCount()
+		{
+			return mData.size();
+		}
+
+		@Override
+		public Object getItem(int p1)
+		{
+			return mData.get(p1);
+		}
+
+		@Override
+		public long getItemId(int p1)
+		{
+			return p1;
+		}
+
+		@Override
+		public View getView(int p1, View convertView, ViewGroup p3)
+		{
+			View view;
+			ViewHolder holder;
+			if (convertView == null)
+			{
+				view = mInflater.inflate(R.layout.expense_item_row, p3, false);
+
+				holder = new ViewHolder();
+				holder.name = (TextView)view.findViewById(R.id.name);
+				holder.cost = (TextView)view.findViewById(R.id.cost);
+				holder.date = (TextView)view.findViewById(R.id.date);
+				holder.quantity = (TextView)view.findViewById(R.id.quantity);
+
+				view.setTag(holder);
+			}
+			else
+			{
+				view = convertView;
+				holder = (ViewHolder)view.getTag();
+			}
+
+			holder.name.setText(mData.get(p1).get("name").toString());
+			
+			double quantity = Double.parseDouble(mData.get(p1).get("quantity").toString());
+			double unitCost = Double.parseDouble(mData.get(p1).get("cost").toString());
+			String totalCost = formatCurrency(unitCost * quantity);
+
+			holder.cost.setText(totalCost);
+
+			SimpleDateFormat fmtOut = new SimpleDateFormat("MMM d, yyyy");
+			String date = fmtOut.format((Date) mData.get(p1).get("date"));
+
+			holder.date.setText(date);
+			holder.quantity.setText(formatCurrency(unitCost) + "×" + mData.get(p1).get("quantity"));
+
+			return view;
+		}
+		
+		public String formatCurrency(double value){
+			return new DecimalFormat("\u20A6 ##,##0.00").format(value);
+		}
+
+		private class ViewHolder
+		{
+			public TextView name, cost, date, quantity;
+		}
 	}
 
 	@Override
@@ -73,6 +137,10 @@ public class ExpenseItemsActivity extends ListActivity
 				ItemSelectDialog dialog = new ItemSelectDialog();
 				dialog.show(getFragmentManager(), ItemSelectDialog.class.getName());
 
+				return true;
+				
+			case R.id.done:
+				
 				return true;
 		}
 

@@ -5,5 +5,11 @@
         android:title="Add Item"
 		android:icon="@drawable/ic_action_new"
 		android:showAsAction="always|withText"/>
+
+    <item
+        android:id="@+id/done"
+        android:title="Done"
+		android:icon="@drawable/ic_action_accept"
+		android:showAsAction="always|withText"/>
     
 </menu>

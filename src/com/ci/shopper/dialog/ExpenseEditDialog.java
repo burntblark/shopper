@@ -38,7 +38,7 @@ public class ExpenseEditDialog extends DialogFragment
 			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					// User clicked OK button
-					HashMap<String, String> values = new HashMap<String, String>();
+					HashMap<String, Object> values = new HashMap<String, Object>();
 					
 					values.put("name", title);
 					//CheckBox cb = (CheckBox) targetView.findViewById(R.id.checkBox1);
@@ -46,29 +46,30 @@ public class ExpenseEditDialog extends DialogFragment
 					//TextView tvDate = (TextView) targetView.findViewById(R.id.expItemDate);
 					
 					//cb.setChecked(true);
-					double cost = Double.parseDouble(((TextView)view.findViewById(R.id.expEditItemCost)).getText().toString());
-					double quantity = Double.parseDouble(((TextView) view.findViewById(R.id.expEditItemQty)).getText().toString());
+					values.put("cost", ((TextView)view.findViewById(R.id.expEditItemCost)).getText().toString());
+					values.put("quantity", ((TextView) view.findViewById(R.id.expEditItemQty)).getText().toString());
 					
-					values.put("quantity", Double.toString(quantity));
+					//values.put("date", Double.toString(quantity));
 					
-					String formattedPrice = new DecimalFormat("\u20A6 ##,##0.00").format(cost*quantity);
 					//tv.setText(formattedPrice);
-					values.put("cost", formattedPrice);
+					//values.put("cost", cost);
+					Date date;
 					try
 					{
 						DatePicker dp = (DatePicker)view.findViewById(R.id.expEditDate);
 						
 						SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-						Date date = fmt.parse(dp.getYear() + "-" + dp.getMonth() + "-" + dp.getDayOfMonth());
+						date = fmt.parse(dp.getYear() + "-" + dp.getMonth() + "-" + dp.getDayOfMonth());
 						
-						SimpleDateFormat fmtOut = new SimpleDateFormat("MMM d");
-						//tvDate.setText(fmtOut.format(date));
-						values.put("date", fmtOut.format(date));
 					}
 					catch (ParseException e)
 					{
 						//TODO: provide alternative to fetch date
+						date = new Date();
 					}
+
+					values.put("date", date);
+					
 					ExpenseItemsActivity activity = (ExpenseItemsActivity) getActivity();
 					activity.addExpenditure(values);
 				}

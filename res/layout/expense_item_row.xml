@@ -25,10 +25,7 @@
 			android:id="@+id/date"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textSize="14sp"
-			android:alpha=".7"
-			android:text="Sep 12"
-			/>
+			android:textSize="14sp"/>
 		
 
 	</LinearLayout>
@@ -45,7 +42,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
-			android:text="@string/zero_naira"
+			android:textAlignment="textEnd"
 			android:layout_gravity="right"/>
 
 		<TextView
@@ -55,7 +52,6 @@
 			android:textSize="14sp"
 			android:text="Item Quantity"
 			android:textAlignment="textEnd"
-			android:alpha=".7"
 			android:layout_gravity="right"/>
 		
 	</LinearLayout>
