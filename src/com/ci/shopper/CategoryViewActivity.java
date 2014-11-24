@@ -66,7 +66,7 @@ public class CategoryViewActivity extends Activity implements LoaderManager.Load
 	@Override
 	public Loader<Cursor> onCreateLoader(int p1, Bundle b)
 	{
-		String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_DESC};
+		String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_BARCODE};
 		//Toast.makeText(getApplicationContext(), Long.toString(b.getLong("catId")), Toast.LENGTH_LONG).show();
 		CursorLoader cLoader = new CursorLoader(this, ItemContentProvider.CONTENT_URI, projection, "category_id = '"+b.getLong("catId", 0)+"'", null, null);
 		

@@ -10,7 +10,7 @@ public class ItemsTable implements BaseColumns
 
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_CATEGORY_ID = "category_id";
-	public static final String COLUMN_DESC = "description";
+	public static final String COLUMN_BARCODE = "barcode";
 
 
 	private static final String SQL_CREATE_ENTRIES =
@@ -18,7 +18,7 @@ public class ItemsTable implements BaseColumns
 	_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 	COLUMN_NAME + " TEXT, " +
 	COLUMN_CATEGORY_ID + " INTEGER DEFAULT 0, " +
-	COLUMN_DESC + " TEXT, " +
+	COLUMN_BARCODE + " TEXT, " +
 	"FOREIGN KEY("+COLUMN_CATEGORY_ID+") REFERENCES "+CategoriesTable.TABLE_NAME+"("+CategoriesTable._ID+") "+
 	"ON UPDATE CASCADE ON DELETE SET DEFAULT);";
 

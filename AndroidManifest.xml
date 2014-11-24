@@ -76,6 +76,10 @@
 			android:name=".provider.ItemContentProvider"
 			android:authorities="com.ci.shopper.provider.Item">
 		</provider>
+		<provider
+			android:name=".provider.ExpenseContentProvider"
+			android:authorities="com.ci.shopper.provider.Expense">
+		</provider>
 		
     </application>
 

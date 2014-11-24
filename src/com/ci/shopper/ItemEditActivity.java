@@ -23,6 +23,7 @@ public class ItemEditActivity extends Activity
         setContentView(R.layout.item_edit);
 		
 		Intent intent = getIntent();
+		
 		Spinner spinner = (Spinner)findViewById(R.id.itemCatId);
 		List <SpinnerObject> lables = getSpinnerObjects();
 		// Creating adapter for spinner
@@ -43,14 +44,14 @@ public class ItemEditActivity extends Activity
 			long _id = intent.getLongExtra(ItemsTable._ID, 0);
 			itemUri = Uri.parse(ItemContentProvider.CONTENT_URI + "/" + _id);
 
-			String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_DESC, ItemsTable.COLUMN_CATEGORY_ID};
+			String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_BARCODE, ItemsTable.COLUMN_CATEGORY_ID};
 			Cursor cursor = getContentResolver().query(itemUri, projection, null, null, null);
 			
 			if(cursor.moveToFirst()){
 				setTitle(R.string.edit_item);
 
 				((EditText)findViewById(R.id.itemName)).setText(cursor.getString(1));
-				((EditText)findViewById(R.id.itemDesc)).setText(cursor.getString(2));
+				((EditText)findViewById(R.id.itemBarcode)).setText(cursor.getString(2));
 			}
 		}
 
@@ -132,7 +133,7 @@ public class ItemEditActivity extends Activity
 			ContentValues values = new ContentValues();
 
 			values.put("name", ((EditText) findViewById(R.id.itemName)).getText().toString());
-			values.put("description", ((EditText) findViewById(R.id.itemDesc)).getText().toString());
+			values.put("barcode", ((EditText) findViewById(R.id.itemBarcode)).getText().toString());
 			SpinnerObject o = (SpinnerObject)((Spinner) findViewById(R.id.itemCatId)).getSelectedItem();
 			
 			Long catId = o.getId();

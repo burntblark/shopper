@@ -7,11 +7,14 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 import com.ci.shopper.*;
-import java.util.Calendar;
+import com.ci.shopper.db.*;
+import com.ci.shopper.provider.*;
+import java.util.*;
 
 public class ExpensesFragment extends Fragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 	private ListView listView;
+	SimpleCursorAdapter listAdapter;
 	private View view;
 
 	@Override
@@ -36,14 +39,23 @@ public class ExpensesFragment extends Fragment implements
 
 		listView = (ListView) view.findViewById(R.id.expense_list);
 
-		View header = view.inflate(getActivity().getBaseContext(),
-				R.layout.expense_list_header, null);
+//		View header = view.inflate(getActivity().getBaseContext(),
+//				R.layout.expense_list_header, null);
+//
+//		listView.addHeaderView(header);
+		
+		String [] fields = new String [] {ExpensesTable.COLUMN_ITEM_NAME};
+		int[] views = new int[] {android.R.id.text1};
 
-		listView.addHeaderView(header);
-		String[] vest = {};
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity()
-				.getBaseContext(), android.R.layout.simple_list_item_1, vest);
-		listView.setAdapter(adapter);
+		getLoaderManager().initLoader(0, null, this);
+		listAdapter = new SimpleCursorAdapter(
+			getActivity(), 
+			android.R.layout.simple_list_item_1, 
+			null, 
+			fields, 
+			views, 0);
+
+		listView.setAdapter(listAdapter);
 	}
 
 	@Override
@@ -69,29 +81,28 @@ public class ExpensesFragment extends Fragment implements
 		return super.onOptionsItemSelected(item);
 	}
 	
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
+	{
+		String[] projection = { "a."+ExpensesTable._ID, "b."+ItemsTable.COLUMN_NAME +" As "+ ExpensesTable.COLUMN_ITEM_NAME};
+		CursorLoader cLoader = new CursorLoader(getActivity(), ExpenseContentProvider.CONTENT_URI, projection, null, null, null);
+
+		return cLoader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data)
+	{
+		listAdapter.changeCursor(data);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader)
+	{
+		listAdapter.changeCursor(null);
+	}
 	
-
-	@Override
-	public Loader<Cursor> onCreateLoader(int p1, Bundle p2) {
-		// TODO: Implement this method
-		return null;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> p1, Cursor p2) {
-		// TODO: Implement this method
-	}
-
-	@Override
-	public void onLoaderReset(Loader<Cursor> p1) {
-		// TODO: Implement this method
-	}
-	
-	public void showDatePickerDialog(View v) {
-	    DialogFragment newFragment = new DatePickerFragment();
-	    newFragment.show(getActivity().getFragmentManager(), "datePicker");
-	}
-
 	public static class DatePickerFragment extends DialogFragment implements
 			DatePickerDialog.OnDateSetListener {
 

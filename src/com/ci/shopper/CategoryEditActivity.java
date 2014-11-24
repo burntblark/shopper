@@ -25,7 +25,7 @@ public class CategoryEditActivity extends Activity
 			long _id = intent.getLongExtra(CategoriesTable._ID, 0);
 			categoryUri = Uri.parse(CategoryContentProvider.CONTENT_URI + "/" + _id);
 			
-			String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME, CategoriesTable.COLUMN_DESC};
+			String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME};
 			Cursor cursor = getContentResolver().query(categoryUri, projection, null, null, null);
 			cursor.moveToFirst();
 			

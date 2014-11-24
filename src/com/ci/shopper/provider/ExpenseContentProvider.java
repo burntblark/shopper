@@ -18,7 +18,7 @@ public class ExpenseContentProvider extends ContentProvider
 
 	private static final String AUTHORITY = "com.ci.shopper.provider.Expense";
 
-	private static final String BASE_PATH = "items";
+	private static final String BASE_PATH = "expenses";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 
 	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/expenses";
@@ -29,6 +29,7 @@ public class ExpenseContentProvider extends ContentProvider
 	String[] columns = { ExpensesTable.COLUMN_ITEM_ID,
 		ExpensesTable.COLUMN_ITEM_QTY,
 		ExpensesTable.COLUMN_EXP_DATE,
+		ExpensesTable.COLUMN_ITEM_NAME,
 		ExpensesTable._ID };
 	
 	static {
@@ -50,8 +51,9 @@ public class ExpenseContentProvider extends ContentProvider
 		Log.w("ShopperLog", "Querying: " + uri.toString());
 		
 		SQLiteQueryBuilder qBuilder = new SQLiteQueryBuilder();
-		checkColumns(projection);
-		qBuilder.setTables(ExpensesTable.TABLE_NAME);
+		//checkColumns(projection);
+		
+		qBuilder.setTables(ExpensesTable.TABLE_NAME + " a Join " + ItemsTable.TABLE_NAME + " b On b._id = a.item_id");
 
 		int uriType = sURIMatcher.match(uri);
 		switch(uriType) {

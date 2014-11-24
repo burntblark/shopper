@@ -91,7 +91,6 @@ public class OverviewContentProvider extends ContentProvider
 	private void checkColumns(String[] projection) {
 		String[] available = { 
 			CategoriesTable.COLUMN_NAME,
-			CategoriesTable.COLUMN_DESC,
 			CategoriesTable._ID };
 
 		if (projection != null) {

@@ -9,7 +9,7 @@ public class CategoriesTable implements BaseColumns
 	public static final String TABLE_NAME = "categories";
 
 	public static final String COLUMN_NAME = "name";
-	public static final String COLUMN_DESC = "description";
+	//public static final String COLUMN_DESC = "description";
 	
 
 	private static final String TEXT_TYPE = " TEXT";
@@ -17,8 +17,8 @@ public class CategoriesTable implements BaseColumns
 	private static final String SQL_CREATE_ENTRIES =
 	"CREATE TABLE " + TABLE_NAME + " (" +
 	_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
-	COLUMN_DESC + TEXT_TYPE +
+	COLUMN_NAME + TEXT_TYPE + //COMMA_SEP +
+	//COLUMN_DESC + TEXT_TYPE +
 	");";
 
 	private static final String SQL_DELETE_ENTRIES =

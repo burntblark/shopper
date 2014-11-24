@@ -8,6 +8,8 @@ import android.widget.*;
 import com.ci.shopper.dialog.*;
 import java.text.*;
 import java.util.*;
+import com.ci.shopper.db.*;
+import com.ci.shopper.provider.*;
 
 public class ExpenseItemsActivity extends ListActivity
 {
@@ -52,7 +54,7 @@ public class ExpenseItemsActivity extends ListActivity
 		}
 
 		@Override
-		public Object getItem(int p1)
+		public HashMap<String, Object> getItem(int p1)
 		{
 			return mData.get(p1);
 		}
@@ -140,6 +142,18 @@ public class ExpenseItemsActivity extends ListActivity
 				return true;
 				
 			case R.id.done:
+				for (int i = 0; i < data.size(); i++){
+					ContentValues record = new ContentValues();
+					
+					record.put(ExpensesTable.COLUMN_ITEM_ID, mAdapter.getItem(i).get("item_id").toString());
+					record.put(ExpensesTable.COLUMN_ITEM_QTY, mAdapter.getItem(i).get("quantity").toString());
+					record.put(ExpensesTable.COLUMN_EXP_DATE, mAdapter.getItem(i).get("date").toString());
+					record.put(ExpensesTable.COLUMN_UNIT_COST, mAdapter.getItem(i).get("cost").toString());
+					
+					getContentResolver().insert(ExpenseContentProvider.CONTENT_URI, record);
+				}
+				
+				finish();
 				
 				return true;
 		}

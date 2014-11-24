@@ -162,7 +162,7 @@ public class ItemContentProvider extends ContentProvider
 
 	private void checkColumns(String[] projection) {
 		String[] available = { ItemsTable.COLUMN_NAME,
-			ItemsTable.COLUMN_DESC,
+			ItemsTable.COLUMN_BARCODE,
 			ItemsTable.COLUMN_CATEGORY_ID,
 			ItemsTable._ID };
 

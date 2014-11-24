@@ -7,7 +7,7 @@ import android.util.*;
 public class ShopperDbHelper extends SQLiteOpenHelper
 {
 	// If you change the database schema, you must increment the database version.
-	public static final int DATABASE_VERSION = 4;
+	public static final int DATABASE_VERSION = 7;
 	public static final String DATABASE_NAME = "Shopper.db";
 
 	public ShopperDbHelper(Context context)
@@ -21,6 +21,8 @@ public class ShopperDbHelper extends SQLiteOpenHelper
 		CategoriesTable.onCreate(db);
 		Log.w("ShopperLog", "Creating Items table");
 		ItemsTable.onCreate(db);
+		Log.w("ShopperLog", "Creating Expenses table");
+		ExpensesTable.onCreate(db);
 	}
 	
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
@@ -31,6 +33,7 @@ public class ShopperDbHelper extends SQLiteOpenHelper
 		
 		CategoriesTable.onUpgrade(db, oldVersion, newVersion);
 		ItemsTable.onUpgrade(db, oldVersion, newVersion);
+		ExpensesTable.onUpgrade(db, oldVersion, newVersion);
 	}
 	
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)

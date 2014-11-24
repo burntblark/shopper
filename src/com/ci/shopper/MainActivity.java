@@ -83,6 +83,8 @@ public class MainActivity extends Activity
 			"Overview",
 			"Expenditure",
 			"Items",
+			"Categories",
+			"Shopping List",
 			"Preferences"
 		};
 
@@ -90,6 +92,8 @@ public class MainActivity extends Activity
 	    int[] icons = new int[] {
 			R.drawable.ic_action_overflow,
 			R.drawable.ic_action_accept,
+			R.drawable.ic_action_new, 
+			R.drawable.ic_action_overflow,
 			R.drawable.ic_action_new, 
 			R.drawable.ic_action_overflow
 	    };

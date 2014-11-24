@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 			protected Cursor getChildrenCursor(Cursor p1)
 			{
 				long groupId = p1.getLong(0);
-				String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_DESC};
+				String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_BARCODE};
 
 				return getActivity().getContentResolver().query(ItemContentProvider.CONTENT_URI, projection, "category_id = '" + groupId + "'", null, null);
 			}
@@ -143,7 +143,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 	@Override
 	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
 	{
-		String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME, CategoriesTable.COLUMN_DESC};
+		String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME};
 		CursorLoader cLoader = new CursorLoader(getActivity(), CategoryContentProvider.CONTENT_URI, projection, null, null, null);
 
 		return cLoader;
@@ -173,14 +173,14 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 	{
 		switch (item.getItemId())
 		{
-			case R.id.item_add:
-				DialogFragment dialog = new ItemEditDialog();
+			case R.id.category_add:
+				DialogFragment dialog = new CategoryEditDialog();
 				dialog.show(getFragmentManager(), "CategoryEditDialog");
 
 				return true;
-			case R.id.expense_new:
-				Intent intent = new Intent(getActivity(), ExpenseItemsActivity.class);
-				startActivity(intent);
+			case R.id.item_add:
+				DialogFragment dialog2 = new ItemEditDialog();
+				dialog2.show(getFragmentManager(), "ItemEditDialog");
 
 				return true;
 		}

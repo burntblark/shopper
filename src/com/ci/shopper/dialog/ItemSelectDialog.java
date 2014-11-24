@@ -45,12 +45,13 @@ public class ItemSelectDialog extends DialogFragment implements LoaderManager.Lo
 				public boolean onChildClick(ExpandableListView p1, View p2, int p3, int p4, long p5)
 				{
 					ExpenseEditDialog dialog2 = new ExpenseEditDialog(((TextView)p2.findViewById(android.R.id.text1)).getText().toString());
-					//dialog2. ().setTitle("Title");
-						//((TextView)p2.findViewById(android.R.id.text1)).getText());
+					
+					Bundle args = new Bundle();
+					args.putLong("item_id", p5);
+					dialog2.setArguments(args);
 					
 					dialog2.show(getFragmentManager(), ExpenseEditDialog.class.getName());
 					
-					//Toast.makeText(getActivity(), "Opens Items Activity", Toast.LENGTH_LONG).show();
 					dialog.cancel();
 					return false;
 				}		
@@ -82,7 +83,7 @@ public class ItemSelectDialog extends DialogFragment implements LoaderManager.Lo
 			protected Cursor getChildrenCursor(Cursor p1)
 			{
 				long groupId = p1.getLong(0);
-				String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_DESC};
+				String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_BARCODE};
 
 				return getActivity().getContentResolver().query(ItemContentProvider.CONTENT_URI, projection, "category_id = ?", new String[]{Long.toString(groupId)}, null);
 			}
@@ -97,7 +98,7 @@ public class ItemSelectDialog extends DialogFragment implements LoaderManager.Lo
 	@Override
 	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
 	{
-		String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME, CategoriesTable.COLUMN_DESC};
+		String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME};
 		CursorLoader cLoader = new CursorLoader(getActivity(), CategoryContentProvider.CONTENT_URI, projection, null, null, null);
 
 		return cLoader;

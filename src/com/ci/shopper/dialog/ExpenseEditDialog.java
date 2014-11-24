@@ -25,7 +25,7 @@ public class ExpenseEditDialog extends DialogFragment
 	}
 	
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState)
+	public Dialog onCreateDialog(final Bundle savedInstanceState)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -39,13 +39,9 @@ public class ExpenseEditDialog extends DialogFragment
 				public void onClick(DialogInterface dialog, int id) {
 					// User clicked OK button
 					HashMap<String, Object> values = new HashMap<String, Object>();
-					
+					//Toast.makeText(getActivity(), Long.toString(getArguments().getLong("item_id")), Toast.LENGTH_SHORT).show();
+					values.put("item_id", getArguments().getLong("item_id"));
 					values.put("name", title);
-					//CheckBox cb = (CheckBox) targetView.findViewById(R.id.checkBox1);
-					//TextView tv = (TextView) targetView.findViewById(R.id.expItemCost);
-					//TextView tvDate = (TextView) targetView.findViewById(R.id.expItemDate);
-					
-					//cb.setChecked(true);
 					values.put("cost", ((TextView)view.findViewById(R.id.expEditItemCost)).getText().toString());
 					values.put("quantity", ((TextView) view.findViewById(R.id.expEditItemQty)).getText().toString());
 					
