@@ -4,9 +4,9 @@ import android.content.*;
 import android.database.*;
 import android.database.sqlite.*;
 import android.net.*;
-import android.text.*;
-import java.util.*;
+import android.util.*;
 import com.ci.shopper.db.*;
+import java.util.*;
 
 public class OverviewContentProvider extends ContentProvider
 {
@@ -40,25 +40,29 @@ public class OverviewContentProvider extends ContentProvider
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
 	{
+		Log.i("ShopperLog", "Query db for expenses overview");
+		
 		SQLiteQueryBuilder qBuilder = new SQLiteQueryBuilder();
-		checkColumns(projection);
+		//checkColumns(projection);
 		qBuilder.setTables( 
 			ExpensesTable.TABLE_NAME + " a Join " + 
 			ItemsTable.TABLE_NAME + " b On (a.item_id = b._id) Join " + 
 			CategoriesTable.TABLE_NAME + " c On (b.category_id = c._id)" );
+			
+		String groupBy = null;
 
 		int uriType = sURIMatcher.match(uri);
 		
 		switch(uriType) {
 			case EXPENSES:
-				
+				//groupBy = "c._id";
 				break;
 			default:
 				throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
 
 		SQLiteDatabase db = database.getWritableDatabase();
-		Cursor cursor = qBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+		Cursor cursor = qBuilder.query(db, projection, selection, selectionArgs, groupBy, null, sortOrder);
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
 		return cursor;

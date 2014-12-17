@@ -26,6 +26,10 @@ public class ItemContentProvider extends ContentProvider
 
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
+	private SQLiteQueryBuilder qBuilder;
+
+	private String[] projection;
+
 	static {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH, ITEMS);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", ITEM_ID);
@@ -42,12 +46,13 @@ public class ItemContentProvider extends ContentProvider
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
 	{
-		Log.w("ShopperLog", "Querying " + uri.toString());
+		Log.i("ShopperLog", "Querying " + uri.toString());
 		
-		SQLiteQueryBuilder qBuilder = new SQLiteQueryBuilder();
-		checkColumns(projection);
-		qBuilder.setTables(ItemsTable.TABLE_NAME);
-
+		this.projection = projection;
+		
+		qBuilder = new SQLiteQueryBuilder();
+		checkColumns(this.projection);
+		
 		int uriType = sURIMatcher.match(uri);
 		switch(uriType) {
 			case ITEMS:
@@ -60,9 +65,10 @@ public class ItemContentProvider extends ContentProvider
 		}
 
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
-		Cursor cursor = qBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+		Cursor cursor = qBuilder.query(db, this.projection, selection, selectionArgs, null, null, sortOrder);
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
+		this.projection = null;
 		return cursor;
 	}
 
@@ -148,7 +154,7 @@ public class ItemContentProvider extends ContentProvider
 					rowsUpdated = sqlDB.update(ItemsTable.TABLE_NAME, 
 											   values,
 											   ItemsTable._ID + "=" + id 
-											   + " and " 
+											   + " AND " 
 											   + selection,
 											   selectionArgs);
 				}
@@ -161,10 +167,26 @@ public class ItemContentProvider extends ContentProvider
 	}
 
 	private void checkColumns(String[] projection) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < projection.length; i++) {
+			
+			//projection[i] = projection[i].replaceFirst("[a-zA-Z]+\\.", "");
+			
+			sb.append(projection[i]);
+			if (i != projection.length - 1) {
+				sb.append(", ");
+			}
+		}
+		
+		Log.i(ItemContentProvider.class.getName(), "Checking columns: " + sb.toString());
+		
 		String[] available = { ItemsTable.COLUMN_NAME,
 			ItemsTable.COLUMN_BARCODE,
 			ItemsTable.COLUMN_CATEGORY_ID,
-			ItemsTable._ID };
+			ItemsTable.COLUMN_CATEGORY,
+			ItemsTable.COLUMN_ID };
+			
+		String tables = ItemsTable.TABLE_NAME;
 
 		if (projection != null) {
 			HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));
@@ -173,6 +195,31 @@ public class ItemContentProvider extends ContentProvider
 			if (!availableColumns.containsAll(requestedColumns)) {
 				throw new IllegalArgumentException("Unknown columns in projection");
 			}
+			
+			if(requestedColumns.contains(ItemsTable.COLUMN_CATEGORY)){
+				
+				tables += " Join " + CategoriesTable.TABLE_NAME + " On categories._id = items.category_id";
+	
+			}
+			
+//			for (int i=0;i<projection.length;i++) {
+//				if (projection[i].equals(ItemsTable.FOREIGN_CATEGORY)) {
+//					projection[i] = CategoriesTable.TABLE_NAME + "." + 
+//						CategoriesTable.COLUMN_NAME + " As " + 
+//						ItemsTable.FOREIGN_CATEGORY;
+//
+//					break;
+//				}else{
+//					projection[i] = ItemsTable.TABLE_NAME + "." + projection[i];
+//
+//				}
+//			}
+			
+			qBuilder.setTables(tables);
+			
+			
 		}
+		
+		
 	}
 }

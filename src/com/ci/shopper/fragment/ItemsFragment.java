@@ -4,6 +4,8 @@ import android.app.*;
 import android.content.*;
 import android.database.*;
 import android.os.*;
+import android.text.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
@@ -11,12 +13,17 @@ import android.widget.SearchView.*;
 import com.ci.shopper.*;
 import com.ci.shopper.db.*;
 import com.ci.shopper.provider.*;
+import com.ci.shopper.dialog.*;
 
 public class ItemsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
 	SimpleCursorAdapter listAdapter;
 
 	ListView listView;
+
+	String listFilter;
+	
+	String[] listFilterArgs;
 
 	private Menu menu;
 
@@ -44,8 +51,40 @@ public class ItemsFragment extends Fragment implements LoaderManager.LoaderCallb
 	private void initialize()
 	{		
 		listView = (ListView) getView().findViewById(R.id.item_list);
+		listView.setFastScrollEnabled(true);
+		//listView.setFastScrollAlwaysVisible(true);
+
 		TextView emptyView = (TextView) getActivity().findViewById(R.id.emptyView);
 		listView.setEmptyView(emptyView);
+
+		EditText q = (EditText) getView().findViewById(R.id.q);
+		q.addTextChangedListener(new TextWatcher() {
+
+				@Override
+				public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3)
+				{
+					listFilter = ItemsTable.COLUMN_NAME + " LIKE ?";
+					listFilterArgs = new String[]{"%" + cs.toString() + "%"};
+					
+					getLoaderManager().restartLoader(0, null, ItemsFragment.this);
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+											  int arg3)
+				{
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void afterTextChanged(Editable arg0)
+				{
+					// TODO Auto-generated method stub                          
+				}
+			});
+
+		q.requestFocus();
 
 		registerForContextMenu(listView);
 
@@ -74,18 +113,40 @@ public class ItemsFragment extends Fragment implements LoaderManager.LoaderCallb
 
 	private void fillList()
 	{
-		String [] fields = new String [] {ItemsTable.COLUMN_NAME};
-		int[] views = new int[] {android.R.id.text1};
+		String [] fields = new String [] {ItemsTable.FIELD_NAME, ItemsTable.FIELD_CATEGORY};
+		int[] views = new int[] {R.id.name, R.id.category};
 
 		getLoaderManager().initLoader(0, null, this);
 		listAdapter = new SimpleCursorAdapter(
 			getActivity(), 
-			android.R.layout.simple_list_item_1, 
+			R.layout.items_list_row, 
 			null, 
 			fields, 
 			views, 0);
 
 		listView.setAdapter(listAdapter);
+
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
+	{
+		String[] projection = { ItemsTable.COLUMN_ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_CATEGORY};
+		CursorLoader cLoader = new CursorLoader(getActivity(), ItemContentProvider.CONTENT_URI, projection, listFilter, listFilterArgs, ItemsTable.COLUMN_NAME + " ASC");
+
+		return cLoader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data)
+	{
+		listAdapter.changeCursor(data);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader)
+	{
+		listAdapter.changeCursor(null);
 	}
 
 	@Override
@@ -93,9 +154,9 @@ public class ItemsFragment extends Fragment implements LoaderManager.LoaderCallb
 	{
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.items_menu, menu);
-		
+
 		this.menu = menu;
-		
+
 		SearchManager manager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
         SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
@@ -108,23 +169,27 @@ public class ItemsFragment extends Fragment implements LoaderManager.LoaderCallb
 				public boolean onQueryTextSubmit(String p1)
 				{
 					// TODO: Implement this method
-					return false;
+					return true;
 				}
-				
+
 
 				@Override 
-				public boolean onQueryTextChange(String query) {
+				public boolean onQueryTextChange(String query)
+				{
+					if (query != null && !query.isEmpty())
+					{
+						search(query);
+						return true; 
+					}
 
-					search(query);
-
-					return true; 
-
+					return true;
 				} 
 
 			});
 	}
 
-	private void search(String query){
+	private void search(String query)
+	{
 		//search db here
 		String[] projection = new String[]{ItemsTable._ID, ItemsTable.COLUMN_NAME};
 		Cursor cursor = getActivity().getContentResolver().query(ItemContentProvider.CONTENT_URI, projection, "name LIKE ?", new String[]{"%" + query + "%"}, null);
@@ -153,44 +218,24 @@ public class ItemsFragment extends Fragment implements LoaderManager.LoaderCallb
 				{
 					text.setText(p3.getString(1));
 				}
-				
-			
-		});
-		
+			});
+
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		switch(item.getItemId()){
+		switch (item.getItemId())
+		{
 			case R.id.search:
 				return true;
+			case R.id.item_add:
+				(new ItemEditDialog())
+					.show(getFragmentManager(), "ItemEditDialog");
+
+				return true;
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
-
-	@Override
-	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
-	{
-		String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME};
-		CursorLoader cLoader = new CursorLoader(getActivity(), ItemContentProvider.CONTENT_URI, projection, null, null, null);
-
-		return cLoader;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data)
-	{
-		listAdapter.changeCursor(data);
-	}
-
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader)
-	{
-		listAdapter.changeCursor(null);
-	}
-
 }

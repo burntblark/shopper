@@ -31,13 +31,13 @@ public class ItemEditDialog extends DialogFragment
 					// User clicked OK button
 					ContentValues values = new ContentValues();
 
-					values.put(ItemsTable.COLUMN_NAME, ((EditText) view.findViewById(R.id.itemName)).getText().toString());
-					values.put(ItemsTable.COLUMN_CATEGORY_ID, Long.toString((((SpinnerObject)((Spinner) view.findViewById(R.id.itemCatId)).getSelectedItem())).getId()));
-					values.put(ItemsTable.COLUMN_BARCODE, ((EditText) view.findViewById(R.id.itemBarcode)).getText().toString());
+					values.put(ItemsTable.FIELD_NAME, ((EditText) view.findViewById(R.id.itemName)).getText().toString());
+					values.put(ItemsTable.FIELD_CATEGORY_ID, Long.toString((((SpinnerObject)((Spinner) view.findViewById(R.id.itemCatId)).getSelectedItem())).getId()));
+					values.put(ItemsTable.FIELD_BARCODE, ((EditText) view.findViewById(R.id.itemBarcode)).getText().toString());
 
 					getActivity().getContentResolver().insert(ItemContentProvider.CONTENT_URI, values);
 
-					Toast.makeText(getActivity().getApplicationContext(), R.string.category_edited, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity().getApplicationContext(), R.string.item_edited, Toast.LENGTH_SHORT).show();
 				}
 			})
 			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

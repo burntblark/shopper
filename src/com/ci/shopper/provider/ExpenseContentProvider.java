@@ -31,6 +31,8 @@ public class ExpenseContentProvider extends ContentProvider
 		ExpensesTable.COLUMN_EXP_DATE,
 		ExpensesTable.COLUMN_ITEM_NAME,
 		ExpensesTable._ID };
+
+	private SQLiteQueryBuilder qBuilder;
 	
 	static {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH, ITEMS);
@@ -50,7 +52,7 @@ public class ExpenseContentProvider extends ContentProvider
 	{
 		Log.w("ShopperLog", "Querying: " + uri.toString());
 		
-		SQLiteQueryBuilder qBuilder = new SQLiteQueryBuilder();
+		qBuilder = new SQLiteQueryBuilder();
 		//checkColumns(projection);
 		
 		qBuilder.setTables(ExpensesTable.TABLE_NAME + " a Join " + ItemsTable.TABLE_NAME + " b On b._id = a.item_id");

@@ -53,7 +53,13 @@ public class ExpensesFragment extends Fragment implements
 			android.R.layout.simple_list_item_1, 
 			null, 
 			fields, 
-			views, 0);
+			views, 0){
+				@Override
+				public View newView (Context context, Cursor cursor, ViewGroup parent){
+				
+					return super.newView(context, cursor, parent);
+				}
+			};
 
 		listView.setAdapter(listAdapter);
 	}
@@ -85,7 +91,7 @@ public class ExpensesFragment extends Fragment implements
 	@Override
 	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
 	{
-		String[] projection = { "a."+ExpensesTable._ID, "b."+ItemsTable.COLUMN_NAME +" As "+ ExpensesTable.COLUMN_ITEM_NAME};
+		String[] projection = { "a."+ExpensesTable._ID, "b.name As "+ ExpensesTable.COLUMN_ITEM_NAME};
 		CursorLoader cLoader = new CursorLoader(getActivity(), ExpenseContentProvider.CONTENT_URI, projection, null, null, null);
 
 		return cLoader;

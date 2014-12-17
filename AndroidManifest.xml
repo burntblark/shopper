@@ -80,7 +80,11 @@
 			android:name=".provider.ExpenseContentProvider"
 			android:authorities="com.ci.shopper.provider.Expense">
 		</provider>
-		
+
+		<provider
+			android:name=".provider.OverviewContentProvider"
+			android:authorities="com.ci.shopper.provider.Overview">
+		</provider>
     </application>
 
 </manifest>

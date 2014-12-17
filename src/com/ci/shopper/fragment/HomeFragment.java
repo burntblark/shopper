@@ -108,10 +108,10 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 
 	private void fillCategories()
 	{
-		String [] groupFields = new String [] {CategoriesTable.COLUMN_NAME};
+		String [] groupFields = new String [] {"category"};
 		int[] groupViews = new int[] {R.id.categoryName};
 
-		String [] childFields = new String [] {CategoriesTable.COLUMN_NAME};
+		String [] childFields = new String [] {"item"};
 		int[] childViews = new int[] {R.id.itemName};
 
 		getLoaderManager().initLoader(0, null, this);
@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 			protected Cursor getChildrenCursor(Cursor p1)
 			{
 				long groupId = p1.getLong(0);
-				String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_BARCODE};
+				String[] projection = { "item_id", "b.name As item"};
 
 				return getActivity().getContentResolver().query(ItemContentProvider.CONTENT_URI, projection, "category_id = '" + groupId + "'", null, null);
 			}
@@ -143,8 +143,8 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 	@Override
 	public Loader<Cursor> onCreateLoader(int p1, Bundle p2)
 	{
-		String[] projection = { CategoriesTable._ID, CategoriesTable.COLUMN_NAME};
-		CursorLoader cLoader = new CursorLoader(getActivity(), CategoryContentProvider.CONTENT_URI, projection, null, null, null);
+		String[] projection = { "category_id", "c.name As category" };
+		CursorLoader cLoader = new CursorLoader(getActivity(), OverviewContentProvider.CONTENT_URI, projection, null, null, null);
 
 		return cLoader;
 	}
@@ -178,10 +178,10 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 				dialog.show(getFragmentManager(), "CategoryEditDialog");
 
 				return true;
-			case R.id.item_add:
-				DialogFragment dialog2 = new ItemEditDialog();
-				dialog2.show(getFragmentManager(), "ItemEditDialog");
-
+			
+			case R.id.expense_new:
+				Intent intent = new Intent(getActivity(), ExpenseItemsActivity.class);
+				startActivity(intent);
 				return true;
 		}
 

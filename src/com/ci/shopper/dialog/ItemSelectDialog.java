@@ -83,7 +83,7 @@ public class ItemSelectDialog extends DialogFragment implements LoaderManager.Lo
 			protected Cursor getChildrenCursor(Cursor p1)
 			{
 				long groupId = p1.getLong(0);
-				String[] projection = { ItemsTable._ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_BARCODE};
+				String[] projection = { ItemsTable.COLUMN_ID, ItemsTable.COLUMN_NAME, ItemsTable.COLUMN_BARCODE};
 
 				return getActivity().getContentResolver().query(ItemContentProvider.CONTENT_URI, projection, "category_id = ?", new String[]{Long.toString(groupId)}, null);
 			}
